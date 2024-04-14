@@ -1,9 +1,11 @@
-import Image from 'next/image';
+'use client';
+import { Image } from '@nextui-org/react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 const Home = () => {
   return (
-    <div className="bg-gray-50">
+    <motion.div initial={{ y: '100vh' }} animate={{ y: 0 }} className="bg-gray-50">
       <div className="mx-auto max-w-7xl p-4  sm:px-6  lg:px-8">
         <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
           {/* 111111 */}
@@ -11,7 +13,7 @@ const Home = () => {
             <Image
               src="https://thermos.com/cdn/shop/products/F4100NY6_1000px_6ffa5fd6-4f51-4dca-b026-de8ed13b291a.png"
               alt="Two models wearing women's black cotton  tee and off-white cotton  tee."
-              className="h-full object-cover object-center group-hover:opacity-75"
+              classNames={{ img: 'opacity-100 z-0 group-hover:opacity-75 h-full object-cover object-center' }}
             />
             <div
               aria-hidden="true"
@@ -41,7 +43,10 @@ const Home = () => {
             <Image
               src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg"
               alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters."
-              className="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full"
+              classNames={{
+                wrapper: 'static',
+                img: 'opacity-100 z-0 object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full',
+              }}
             />
             <div
               aria-hidden="true"
@@ -65,7 +70,10 @@ const Home = () => {
             <Image
               src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg"
               alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk."
-              className="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full"
+              classNames={{
+                wrapper: 'static',
+                img: 'opacity-100 z-0 object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full',
+              }}
             />
             <div
               aria-hidden="true"
@@ -94,7 +102,7 @@ const Home = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

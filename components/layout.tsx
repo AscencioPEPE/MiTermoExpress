@@ -1,7 +1,9 @@
 'use client';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
+import { Image } from '@nextui-org/react';
+import { NextUIProvider } from '@nextui-org/react';
+
 import Link from 'next/link';
 import { Fragment, ReactNode } from 'react';
 
@@ -32,7 +34,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <>
+    <NextUIProvider>
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-200">
           {({ open }) => (
@@ -190,6 +192,6 @@ export default function Layout({ children }: LayoutProps) {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
         </main>
       </div>
-    </>
+    </NextUIProvider>
   );
 }
