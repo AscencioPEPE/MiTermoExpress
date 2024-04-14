@@ -91,6 +91,9 @@ module.exports = {
       boxShadow: {
         blue: '0px 4px 21.7px -5px rgba(70, 130, 180, 0.80) !important',
       },
+      height: {
+        dvhContainer: 'calc(100dvh - 4rem)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), nextui()],
