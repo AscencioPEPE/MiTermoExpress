@@ -50,6 +50,9 @@ dependencies:
   device-detector-js:
     specifier: ^3.0.3
     version: 3.0.3
+  dotenv:
+    specifier: ^16.4.5
+    version: 16.4.5
   framer-motion:
     specifier: ^11.0.3
     version: 11.0.28(react-dom@18.2.0)(react@18.2.0)
@@ -61,13 +64,13 @@ dependencies:
     version: 14.2.0(@babel/core@7.24.4)(react-dom@18.2.0)(react@18.2.0)
   next-auth:
     specifier: ^4.24.6
-    version: 4.24.7(next@14.2.0)(nodemailer@6.9.13)(react-dom@18.2.0)(react@18.2.0)
+    version: 4.24.7(next@14.2.0)(react-dom@18.2.0)(react@18.2.0)
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@14.2.0)(react-dom@18.2.0)(react@18.2.0)
-  nodemailer:
-    specifier: ^6.9.8
-    version: 6.9.13
+  postcss:
+    specifier: ^8.4.38
+    version: 8.4.38
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -6935,6 +6938,12 @@ packages:
       is-obj: 2.0.0
     dev: true
 
+  /dotenv@16.4.5:
+    resolution:
+      { integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg== }
+    engines: { node: '>=12' }
+    dev: false
+
   /eastasianwidth@0.2.0:
     resolution:
       { integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA== }
@@ -8963,7 +8972,7 @@ packages:
       { integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw== }
     dev: true
 
-  /next-auth@4.24.7(next@14.2.0)(nodemailer@6.9.13)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@4.24.7(next@14.2.0)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       { integrity: sha512-iChjE8ov/1K/z98gdKbn2Jw+2vLgJtVV39X+rCP5SGnVQuco7QOr19FRNGMIrD8d3LYhHWV9j9sKLzq1aDWWQQ== }
     peerDependencies:
@@ -8980,7 +8989,6 @@ packages:
       cookie: 0.5.0
       jose: 4.15.5
       next: 14.2.0(@babel/core@7.24.4)(react-dom@18.2.0)(react@18.2.0)
-      nodemailer: 6.9.13
       oauth: 0.9.15
       openid-client: 5.6.5
       preact: 10.20.2
@@ -9049,12 +9057,6 @@ packages:
   /node-releases@2.0.14:
     resolution:
       { integrity: sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw== }
-
-  /nodemailer@6.9.13:
-    resolution:
-      { integrity: sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA== }
-    engines: { node: '>=6.0.0' }
-    dev: false
 
   /normalize-path@3.0.0:
     resolution:

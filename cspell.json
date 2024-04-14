@@ -125,6 +125,8 @@
     "guiaremos",
     "guias",
     "Guías",
+    "headlessui",
+    "heroicons",
     "Hola",
     "hookform",
     "Hospitalario",
@@ -263,7 +265,10 @@
     "utilitis",
     "Vence",
     "Vigencia",
-    "zona"
+    "zona",
+    "DiseñaTermo",
+    "Diseña",
+    "Termo"
   ],
   "ignorePaths": [
     "**/node_modules/**",
