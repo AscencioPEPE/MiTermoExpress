@@ -5,22 +5,22 @@ import * as z from 'zod';
 import useApi from '@/hooks/useApi';
 import useUserStorage from '@/zustand/user';
 
-export const loginSchema = z.object({
-  username: z.string(),
-  password: z.string(),
-});
+interface LoginProps {
+  username: string;
+  password: string;
+}
 
 const Login = () => {
   const { storageCurrentUser } = useUserStorage();
 
-  const { handleSubmit, register } = useForm<z.infer<typeof loginSchema>>();
+  const { handleSubmit, register } = useForm<LoginProps>();
   const { post: login } = useApi({
     key: ['auth'],
     method: 'POST',
     url: 'auth/login',
   });
 
-  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (data: LoginProps) => {
     const response = await login?.mutateAsync(data);
     storageCurrentUser(response);
   };
