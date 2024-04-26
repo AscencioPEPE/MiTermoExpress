@@ -37,7 +37,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <NextUIProvider>
       <AnimatePresence>
-        <div className="min-h-full bg-[url('/images/background.jpg')] bg-contain bg-fixed bg-center">
+        <div className="min-h-full bg-[url('/images/background.jpg')] bg-cover bg-fixed bg-no-repeat">
           <Disclosure as="nav">
             {({ open }) => (
               <motion.div
@@ -48,7 +48,7 @@ export default function Layout({ children }: LayoutProps) {
                 className="bg-transparent"
                 // className={classNames(route !== '/' ? 'bg-black ' : 'bg-[#EDF0F4]')}
               >
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto  px-4 sm:px-6 lg:px-8">
                   <div className="flex h-16 items-center justify-between">
                     <div className="flex items-center">
                       <Link href="/">
@@ -58,7 +58,7 @@ export default function Layout({ children }: LayoutProps) {
                             src="https://cdn-icons-png.flaticon.com/128/562/562031.png"
                             alt="Your Company"
                           />
-                          <h2>DiseñaTermo</h2>
+                          <h2 className="text-softWhite">DiseñaTermo</h2>
                         </div>
                       </Link>
                       <div className="hidden md:block">
@@ -200,7 +200,7 @@ export default function Layout({ children }: LayoutProps) {
           </Disclosure>
 
           <main>
-            <div className="h-dvhContainer ">{children}</div>
+            <div className="min-h-100dvh-minus-4rem pb-10">{children}</div>
           </main>
         </div>
       </AnimatePresence>

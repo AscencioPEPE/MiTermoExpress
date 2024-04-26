@@ -112,7 +112,7 @@ const Home = () => {
         as={Link}
         href="/products"
         // eslint-disable-next-line tailwindcss/enforces-shorthand
-        className="absolute bottom-[-20px] right-1/2 flex h-[80px] w-[80px] items-center justify-center  rounded-full border-1 border-black/20 bg-white/30 shadow-lg  hover:bg-white/80"
+        className="bottom-1/6 absolute right-1/2 flex h-[70px] w-[70px] items-center justify-center  rounded-3xl border-1 border-black/20 bg-white/30 shadow-lg  hover:bg-white/80"
       >
         <ArrowDownIcon className="size-[30px]" />
       </Button>

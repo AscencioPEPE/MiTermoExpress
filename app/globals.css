@@ -4,15 +4,16 @@
 
 @layer base {
   :root {
-    --background: 255, 255, 255;
+    --background: 0, 0, 0;
     --foreground: 24, 24, 27;
     --card: 255, 255, 255;
 
     --popover: 0 0% 100%;
 
-    --primary: 255, 221, 124;
+    --primary: 252, 163, 17;
+    --secondary: 255, 217, 102;
 
-    --secondary: 46, 108, 163;
+    --soft-white: 238, 238, 238;
 
     --danger: 234, 108, 108;
 
@@ -26,7 +27,7 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 0, 0, 0;
     --foreground: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -62,5 +63,8 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .min-h-100dvh-minus-4rem {
+    min-height: calc(100vh - 4rem);
   }
 }

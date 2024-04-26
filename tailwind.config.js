@@ -56,6 +56,9 @@ module.exports = {
         muted: {
           DEFAULT: withOpacity('--muted'),
         },
+        softWhite: {
+          DEFAULT: withOpacity('--soft-white'),
+        },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
@@ -92,7 +95,8 @@ module.exports = {
         blue: '0px 4px 21.7px -5px rgba(70, 130, 180, 0.80) !important',
       },
       height: {
-        dvhContainer: 'calc(100dvh - 4rem)',
+        dvhContainer: 'min-height: calc(100dvh - 4rem)',
+        dvhSidebar: 'calc(100dvh - 6rem)',
       },
     },
   },
