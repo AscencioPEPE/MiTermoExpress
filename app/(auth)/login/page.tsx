@@ -1,7 +1,6 @@
 'use client';
 import { Button, Input } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import useApi from '@/hooks/useApi';
 import useUserStorage from '@/zustand/user';
 

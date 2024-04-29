@@ -78,6 +78,8 @@
     "dinero",
     "Directorio",
     "Directorios",
+    "Diseña",
+    "DiseñaTermo",
     "distinta",
     "documentos",
     "Dudoso",
@@ -248,6 +250,7 @@
     "tarjeta",
     "tener",
     "Termino",
+    "Termo",
     "tienes",
     "tipo",
     "Todavía",
@@ -266,9 +269,7 @@
     "Vence",
     "Vigencia",
     "zona",
-    "DiseñaTermo",
-    "Diseña",
-    "Termo"
+    "zustand"
   ],
   "ignorePaths": [
     "**/node_modules/**",
