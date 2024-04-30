@@ -25,7 +25,6 @@ function withOpacity(variableName) {
 module.exports = {
   darkMode: ['class'],
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{ts,tsx}',
@@ -33,31 +32,20 @@ module.exports = {
   ],
   prefix: '',
   theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
-    },
     extend: {
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
-        foreground: withOpacity('--foreground'),
         primary: {
-          DEFAULT: withOpacity('--primary'),
+          DEFAULT: 'hsl(var(--primary))',
         },
         secondary: {
-          DEFAULT: withOpacity('--secondary'),
-        },
-        muted: {
-          DEFAULT: withOpacity('--muted'),
+          DEFAULT: 'hsl(var(--secondary))',
         },
         softWhite: {
-          DEFAULT: withOpacity('--soft-white'),
+          DEFAULT: 'hsl(var(--soft-white))',
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
@@ -96,7 +84,7 @@ module.exports = {
       },
       height: {
         dvhContainer: 'min-height: calc(100dvh - 4rem)',
-        dvhSidebar: 'calc(100dvh - 6rem)',
+        sidebar: 'calc(100dvh - 6rem)',
       },
     },
   },

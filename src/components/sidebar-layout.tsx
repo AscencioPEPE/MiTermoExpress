@@ -1,4 +1,3 @@
-'use client';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import {

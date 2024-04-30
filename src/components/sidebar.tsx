@@ -1,6 +1,5 @@
-'use client';
 import { Accordion, AccordionItem, Checkbox, CheckboxGroup } from '@nextui-org/react';
-import { motion } from 'framer-motion';
+
 interface SidebarProps {
   category: string;
   key: string | number;
@@ -38,8 +37,8 @@ export const Sidebar = () => {
   ];
 
   return (
-    <motion.div initial={{ y: '100vh' }} animate={{ y: 0 }} transition={{ duration: 0.5 }} className="relative">
-      <aside className="fixed mx-6 h-dvhSidebar">
+    <div className="relative">
+      <aside className="h-sidebar fixed mx-6 ">
         <Accordion
           selectionMode="multiple"
           isCompact
@@ -65,6 +64,6 @@ export const Sidebar = () => {
           ))}
         </Accordion>
       </aside>
-    </motion.div>
+    </div>
   );
 };

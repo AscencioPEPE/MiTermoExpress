@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import * as env from 'dotenv';
-import { queryClient } from '@/lib/queryClient';
+import { queryClient } from '../lib/queryClient';
 
-env.config();
-
-export const baseUrl = process.env.NEXT_PUBLIC_API as string;
+export const baseUrl = import.meta.env.VITE_PUBLIC_API as string;
 
 export const userInfo = () => {
   let data = {};
@@ -41,7 +38,9 @@ export const api = async (method: string, url: string, obj = {}) => {
   try {
     switch (method) {
       case 'GET':
-        return await axios.get(`${baseUrl}/${url}`, config()).then((res) => res.data);
+        const foo = await axios.get(`${baseUrl}/${url}`, config()).then((res) => res.data);
+
+        return foo;
 
       case 'POST':
         return await axios.post(`${baseUrl}/${url}`, obj, config()).then((res) => res.data);

@@ -1,9 +1,9 @@
-'use client';
-import { ArrowDownIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { Button, Image, Link } from '@nextui-org/react';
-import { motion } from 'framer-motion';
+"use client";
+import { ArrowDownIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { Button, Image, Link } from "@nextui-org/react";
+import { motion } from "framer-motion";
 
-const Home = () => {
+export const Home = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -18,7 +18,9 @@ const Home = () => {
             <Image
               src="https://thermos.com/cdn/shop/products/F4100NY6_1000px_6ffa5fd6-4f51-4dca-b026-de8ed13b291a.png"
               alt="Two models wearing women's black cotton  tee and off-white cotton  tee."
-              classNames={{ img: 'opacity-100 z-0 group-hover:opacity-75 h-full object-cover object-center' }}
+              classNames={{
+                img: "opacity-100 z-0 group-hover:opacity-75 h-full object-cover object-center",
+              }}
             />
             <div
               aria-hidden="true"
@@ -26,7 +28,9 @@ const Home = () => {
             />
             <div className="flex items-start p-6 sm:absolute sm:inset-0">
               <div>
-                <h3 className="text-7xl font-semibold text-white">THE SIMPLE</h3>
+                <h3 className="text-7xl font-semibold text-white">
+                  THE SIMPLE
+                </h3>
                 <h3 className="text-7xl font-semibold text-white">THERMOS</h3>
                 <h3 className="text-7xl font-semibold text-white">DESIGN</h3>
                 <Button
@@ -49,8 +53,8 @@ const Home = () => {
               src="https://deepbluesub.com/wp-content/uploads/2023/05/yeti-rambler-26-black-front-e1683901745199.png"
               alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters."
               classNames={{
-                wrapper: 'static',
-                img: 'opacity-100 z-0 object-contain object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full',
+                wrapper: "static",
+                img: "opacity-100 z-0 object-contain object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full",
               }}
             />
             <div
@@ -76,8 +80,8 @@ const Home = () => {
               src="https://yeti-web.imgix.net/490d23de6ee7730b/W-240001_ValentinesDay_Site_Studio_Shakethingsupset_Primary_B_2400x2400.png?bg=0fff&auto=format&w=500&q=68&h=500&fit=fill&hattr=500px&wattr=500px"
               alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk."
               classNames={{
-                wrapper: 'static',
-                img: 'opacity-100 z-0 object-contain object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full',
+                wrapper: "static",
+                img: "opacity-100 z-0 object-contain object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:size-full",
               }}
             />
             <div
@@ -101,7 +105,11 @@ const Home = () => {
         </div>
 
         <div className="mt-6 sm:hidden">
-          <Button as={Link} href="#" className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+          <Button
+            as={Link}
+            href="#"
+            className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+          >
             Browse all categories
             <span aria-hidden="true"> &rarr;</span>
           </Button>
@@ -111,7 +119,6 @@ const Home = () => {
       <Button
         as={Link}
         href="/products"
-        // eslint-disable-next-line tailwindcss/enforces-shorthand
         className="bottom-1/6 absolute right-1/2 flex h-[70px] w-[70px] items-center justify-center  rounded-3xl border-1 border-black/20 bg-white/30 shadow-lg  hover:bg-white/80"
       >
         <ArrowDownIcon className="size-[30px]" />
@@ -119,5 +126,3 @@ const Home = () => {
     </motion.div>
   );
 };
-
-export default Home;

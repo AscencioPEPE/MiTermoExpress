@@ -1,4 +1,3 @@
-'use client';
 import { faker } from '@faker-js/faker';
 import { Button, Divider, Image } from '@nextui-org/react';
 
