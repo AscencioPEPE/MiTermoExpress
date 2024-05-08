@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from 'zustand';
-import { User } from '@/types/user';
+import { User } from '@/src/types/user';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 type UserProps = {
@@ -9,7 +9,7 @@ type UserProps = {
   clearCurrentUser: () => void;
 };
 
-const useClaimsStore = create(
+const useUserStore = create(
   persist<UserProps>(
     (set) => ({
       currentUser: {
@@ -40,4 +40,4 @@ const useClaimsStore = create(
   )
 );
 
-export default useClaimsStore;
+export default useUserStore;

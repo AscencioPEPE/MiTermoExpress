@@ -6,6 +6,7 @@ import { MainRoutes } from './routes/main-routes';
 import { queryClient } from './lib/queryClient';
 import Layout from './components/layout';
 import { NextUIProvider } from '@nextui-org/react';
+import 'react-modern-drawer/dist/index.css';
 
 function App() {
   return (
