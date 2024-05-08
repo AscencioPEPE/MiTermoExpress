@@ -49,12 +49,11 @@ export const Sidebar = ({ filters, setFilters }: ISidebar) => {
 
   return (
     <div className="relative">
-      <aside className="fixed mx-6 h-sidebar ">
+      <aside className="md:fixed md:mx-6 md:h-sidebar">
         <Accordion
-          defaultSelectedKeys={['1']}
           selectionMode="multiple"
           isCompact
-          className="flex h-full flex-col items-center justify-start rounded-xl bg-[#1A1A1A] p-5 shadow-xl"
+          className="flex h-full flex-col items-center justify-start rounded-xl bg-[#1A1A1A]  shadow-xl"
         >
           {items.map((item) => (
             <AccordionItem
