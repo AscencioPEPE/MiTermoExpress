@@ -11,7 +11,6 @@ interface DrawerCartProps {
 }
 
 export const DrawerCart = ({ setShowCurrentCart, showCurrentCart }: DrawerCartProps) => {
-  console.log('showCurrentCart: ', showCurrentCart);
   const { lastItemAdded, updateCartItem } = useCartStore();
 
   return (

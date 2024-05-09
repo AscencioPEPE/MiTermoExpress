@@ -36,31 +36,6 @@ export const Products = () => {
     products?.refetch();
   }, [page, limit, filters]);
 
-  const foo = {
-    startIndex: 1,
-    endIndex: 0,
-    count: 40,
-    totalProductsPage: 20,
-    page: 1,
-    pages: 2,
-    products: Array(20)
-      .fill({})
-      .map(() => ({
-        name: faker.commerce.productName(),
-        price: faker.commerce.price(),
-        description: faker.commerce.productDescription(),
-        quantity: Math.floor(Math.random() * 10),
-        capacity: Math.floor(Math.random() * 100),
-        availability: 1,
-        variants: Array(3)
-          .fill({})
-          .map(() => ({
-            id: crypto.randomUUID(),
-            color: 'red',
-          })),
-      })),
-  };
-
   return (
     <motion.div
       initial={{ y: '100vh' }}
@@ -81,6 +56,7 @@ export const Products = () => {
                 if (filter.includes('priceOrder')) return null;
                 return (
                   <Chip
+                    key={index}
                     variant="faded"
                     color="warning"
                     onClose={() => {
@@ -99,7 +75,7 @@ export const Products = () => {
           )}
           <div className="flex w-full flex-wrap sm:justify-between sm:gap-5 md:justify-normal">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {foo.products?.map((product: any, index: number) => (
+            {products?.data?.products?.map((product: any, index: number) => (
               <div
                 key={index}
                 className="flex  w-full flex-col justify-between gap-y-2 rounded-lg  bg-[#1A1A1A] p-3 text-white/40  shadow-lg md:h-[320px] md:w-[250px] "
@@ -123,7 +99,8 @@ export const Products = () => {
                     className="text-gray flex w-full gap-1 border-1 border-white/20 bg-transparent"
                     onPress={() => {
                       storageCartItem(product);
-                      setShowCurrentCart({ isActive: true, isMobile: size === 'sm' ? true : false });
+                      const isSmallScreen = size === 'sm' || size === 'md' ? true : false;
+                      setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
                     }}
                   >
                     <ShoppingCartIcon className="size-[20px]" />

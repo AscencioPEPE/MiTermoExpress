@@ -11,7 +11,6 @@ export const Cart = () => {
   const { currentCartItems, removeCartItem, updateCartItem } = useCartStore();
 
   const handleSubtract = (product: CartProduct) => {
-    console.log('product: ', product);
     if (product.quantityToBuy > 1) {
       updateCartItem(product.name, product.quantityToBuy - 1);
       return;

@@ -70,6 +70,7 @@ export const Sidebar = ({ filters, setFilters }: ISidebar) => {
                   if (item.category === 'priceOrder') {
                     return (
                       <RadioGroup
+                        key={input.id}
                         value={radioValue}
                         onValueChange={(e) => {
                           setRadioValue(e);
@@ -147,6 +148,7 @@ export const Sidebar = ({ filters, setFilters }: ISidebar) => {
                     if (item.category === 'priceOrder') {
                       return (
                         <RadioGroup
+                          key={input.id}
                           value={radioValue}
                           onValueChange={(e) => {
                             setRadioValue(e);
