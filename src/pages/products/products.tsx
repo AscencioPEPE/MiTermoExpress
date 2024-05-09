@@ -93,7 +93,7 @@ export const Products = () => {
             {foo.products?.map((product: any, index: number) => (
               <div
                 key={index}
-                className="flex  w-full flex-col justify-between rounded-lg  bg-[#1A1A1A] p-3 text-white/40  shadow-lg md:h-[320px] md:w-[250px] "
+                className="flex  w-full flex-col justify-between gap-y-2 rounded-lg  bg-[#1A1A1A] p-3 text-white/40  shadow-lg md:h-[320px] md:w-[250px] "
               >
                 <div className="flex items-center justify-center rounded-lg bg-[#0f0e0e8c]">
                   <Image
@@ -103,10 +103,10 @@ export const Products = () => {
                     classNames={{ img: 'md:w-[100px] md:h-[100px] h-[150px]' }}
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <span className="text-[#F0F0F0]">{product.name}</span>
-                  <span>{product.description}</span>
-                  <span className="text-[#F0F0F0]">${product.price}</span>
+                <div className="flex h-full flex-col gap-2">
+                  <h4 className="truncate font-semibold text-softWhite">{product.name}</h4>
+                  <p className="line-clamp-3 text-sm">{product.description}</p>
+                  <span className="text-softWhite">${product.price}</span>
                 </div>
                 <Divider className="my-4 bg-white/10 md:m-0" />
                 <div className="flex w-full gap-2">

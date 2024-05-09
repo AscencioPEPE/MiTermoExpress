@@ -15,7 +15,7 @@ export const ModalConfirmation = ({ isOpen, title, content, onClose, onOk, onOkT
       <ModalContent>
         {() => (
           <>
-            <ModalHeader className="3 flex flex-col gap-1">{title}</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
             <ModalBody>{content}</ModalBody>
             <ModalFooter>
               <Button color="secondary" variant="light" onPress={onClose}>
