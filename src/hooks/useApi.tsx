@@ -2,6 +2,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { queryClient } from '../lib/queryClient';
+import { isValidURL } from '../lib/regex';
 
 export const baseUrl = import.meta.env.VITE_PUBLIC_API as string;
 
@@ -108,6 +109,10 @@ export default function useApi({ key, method, url }: ApiHookParams) {
            *  If the api fail, the previous data is returned
            **/
           queryClient.setQueryData(key, context?.previousObj);
+        },
+        onSuccess: (data) => {
+          const url = isValidURL(data);
+          if (data && url) window.open(data, '_blank');
         },
         onSettled: () => queryClient.invalidateQueries({ queryKey: key }),
       });

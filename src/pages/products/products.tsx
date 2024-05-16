@@ -1,5 +1,5 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { Badge, Button, Chip, Divider, Image, Pagination } from '@nextui-org/react';
+import { Badge, Button, Chip, Divider, Image, Link, Pagination } from '@nextui-org/react';
 import { m, motion } from 'framer-motion';
 import { Sidebar } from '../../components/sidebar';
 import useApi from '../../hooks/useApi';
@@ -106,7 +106,13 @@ export const Products = () => {
                     <ShoppingCartIcon className="size-[20px]" />
                     <span className="text-xs">Add to cart</span>
                   </Button>
-                  <Button className="w-2/6 bg-[#E0F6BF]">Buy</Button>
+                  <Link
+                    className="flex w-4/6 items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black"
+                    href="/cart"
+                    onPress={() => storageCartItem(product)}
+                  >
+                    Buy
+                  </Link>
                 </div>
               </div>
             ))}

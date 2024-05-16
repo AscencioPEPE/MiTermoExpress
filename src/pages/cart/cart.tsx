@@ -1,14 +1,21 @@
-import { faker } from '@faker-js/faker';
 import { Button, Divider, Image } from '@nextui-org/react';
 import useCartStore from '../../zustand/cart';
-import { CartProduct } from '@/src/types/products';
+import { CartProduct, Product } from '@/src/types/products';
 import { ModalConfirmation } from '../../components/modal-confirmation';
+import useApi from '../../hooks/useApi';
 import { useState } from 'react';
+import useUserStore from '../../zustand/user';
+import { formattedFixed } from '../../lib/formater';
+import { useLocation } from 'wouter';
+import { User } from '@/src/types/user';
 
 export const Cart = () => {
+  const { currentCartItems, removeCartItem, updateCartItem } = useCartStore();
+  const { currentUser, storageCurrentUser } = useUserStore();
+  const [_, setLocation] = useLocation();
+
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState<CartProduct | undefined>(undefined);
-  const { currentCartItems, removeCartItem, updateCartItem } = useCartStore();
 
   const handleSubtract = (product: CartProduct) => {
     if (product.quantityToBuy > 1) {
@@ -18,6 +25,51 @@ export const Cart = () => {
     setModalData(product);
     setShowModal(true);
   };
+
+  const handlePayment = () => {
+    /**
+     * Check if the customer has account
+     */
+    const isUserLogged = !!currentUser.address;
+
+    if (!isUserLogged) setLocation('/auth/guest');
+    /**
+     * Get the cart and mapping the data for form post
+     */
+    const items = currentCartItems.map((product) => ({
+      name: product.name,
+      price: Number(formattedFixed(product.price)),
+      variants: product.variants[0]['color'],
+      capacity: product.capacity,
+      quantity: product.quantityToBuy, // !Error backend
+    }));
+    /**
+     * Get the customer and mapping the data for form post
+     */
+    const customer: User = {
+      address: currentUser.address,
+      email: currentUser.email,
+      name: currentUser.name,
+      phone: currentUser.phone,
+    };
+    /**
+     * Get the customer and products
+     */
+    const paymentData = {
+      items,
+      customer,
+    };
+    /**
+     * Do the payment
+     */
+    payment?.mutateAsync(paymentData);
+  };
+
+  const { post: payment } = useApi({
+    method: 'POST',
+    key: ['payment'],
+    url: 'api/payments/checkout/hosted',
+  });
 
   return (
     <>
@@ -98,7 +150,9 @@ export const Cart = () => {
                 <span className="text-softWhite/60">Total: </span>
                 <span className="text-softWhite/80">{`${currentCartItems.reduce((a, b) => a + Number(b.price), 0)}`}</span>
               </div>
-              <Button className="bg-blue-500 font-bold text-white">Continuar compra</Button>
+              <Button className="bg-blue-500 font-bold text-white" onPress={handlePayment}>
+                Continuar compra
+              </Button>
             </div>
           </div>
         </div>

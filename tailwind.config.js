@@ -81,10 +81,10 @@ module.exports = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       boxShadow: {
-        blue: '0px 4px 21.7px -5px rgba(70, 130, 180, 0.80) !important',
+        gray: '0px 4px 21.7px -5px rgba(100, 100, 100, 0.80) !important',
       },
       height: {
-        dvhContainer: 'min-height: calc(100dvh - 4rem)',
+        dvhContainer: 'calc(100dvh - 8rem)',
         sidebar: 'calc(100dvh - 6rem)',
       },
     },

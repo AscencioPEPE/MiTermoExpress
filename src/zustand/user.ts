@@ -6,29 +6,41 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 type UserProps = {
   currentUser: User;
   storageCurrentUser: (currentUser: User) => void;
-  clearCurrentUser: () => void;
+  removeCurrentUser: () => void;
 };
 
 const useUserStore = create(
   persist<UserProps>(
     (set) => ({
       currentUser: {
-        accessToken: '',
-        tokenType: '',
+        address: '',
+        email: '',
+        name: '',
+        phone: '',
+        isGuest: undefined,
+        password: undefined,
       },
       storageCurrentUser: (currentUser) => {
         return set((state) => ({
           currentUser: {
-            ...state.currentUser,
-            ...currentUser,
+            address: currentUser.address,
+            email: currentUser.email,
+            name: currentUser.name,
+            phone: currentUser.phone,
+            isGuest: currentUser.isGuest,
+            password: currentUser.password,
           },
         }));
       },
-      clearCurrentUser: () => {
+      removeCurrentUser: () => {
         return set(() => ({
           currentUser: {
-            accessToken: '',
-            tokenType: '',
+            address: '',
+            email: '',
+            name: '',
+            phone: '',
+            isGuest: undefined,
+            password: undefined,
           },
         }));
       },

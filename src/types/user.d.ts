@@ -1,4 +1,8 @@
 export type User = {
-  accessToken: string;
-  tokenType: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  password?: string;
+  isGuest?: boolean;
 };
