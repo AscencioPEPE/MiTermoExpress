@@ -9,20 +9,21 @@ export const builderGuestSchema = z.object({
 });
 
 export const builderLoginSchema = z.object({
-  email: z.string().email(),
+  username: z.string().email(),
   password: z.string().min(6),
 });
 
-export const builderRegisterSchema = z.object({
+export const builderRegisterCustomerSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   phone: z.string().min(8),
   address: z.string().min(1),
   name: z.string().min(1),
+  orders: z.array(z.string()).optional(),
 });
 
 export type GuestSchema = z.infer<typeof builderGuestSchema>;
 
 export type LoginSchema = z.infer<typeof builderLoginSchema>;
 
-export type RegisterSchema = z.infer<typeof builderRegisterSchema>;
+export type RegisterSchema = z.infer<typeof builderRegisterCustomerSchema>;

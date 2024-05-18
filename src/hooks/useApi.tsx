@@ -3,6 +3,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { queryClient } from '../lib/queryClient';
 import { isValidURL } from '../lib/regex';
+import { UserResponseApi } from '@/src/types/user';
+import useUserStore from '../zustand/user';
 
 export const baseUrl = import.meta.env.VITE_PUBLIC_API as string;
 
@@ -74,6 +76,8 @@ interface ApiHookParams {
 }
 
 export default function useApi({ key, method, url }: ApiHookParams) {
+  const { storageCurrentUser, currentUser } = useUserStore();
+
   switch (method) {
     case 'GET':
       // eslint-disable-next-line
@@ -113,6 +117,8 @@ export default function useApi({ key, method, url }: ApiHookParams) {
         onSuccess: (data) => {
           const url = isValidURL(data);
           if (data && url) window.open(data, '_blank');
+
+          if (data.accessToken) storageCurrentUser({ ...currentUser, token: data.accessToken });
         },
         onSettled: () => queryClient.invalidateQueries({ queryKey: key }),
       });

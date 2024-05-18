@@ -6,9 +6,13 @@ import { EyeIcon } from '@heroicons/react/24/outline';
 import useUserStore from '../../zustand/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, builderLoginSchema } from '../../lib/schemas/schema-auth';
+import { useLocation } from 'wouter';
+import useApi from '../../hooks/useApi';
+import { User } from '@/src/types/user';
 
 export const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [_, setLocation] = useLocation();
   const { storageCurrentUser } = useUserStore();
 
   const {
@@ -17,13 +21,19 @@ export const AuthLogin = () => {
     formState: { errors },
   } = useForm<LoginSchema>({ resolver: zodResolver(builderLoginSchema) });
 
+  const { post: signIn } = useApi({
+    method: 'POST',
+    key: ['auth'],
+    url: 'auth/login',
+  });
+
   const onSubmit = (data: LoginSchema) => {
     const hasErrors = Object.entries(errors).length > 0;
 
     if (hasErrors) return;
 
-    // storageCurrentUser({ ...data, isGuest: true } as User);
-    // setLocation('/cart', { replace: true });
+    signIn.mutateAsync(data);
+    storageCurrentUser(data as User);
   };
 
   return (
@@ -31,7 +41,7 @@ export const AuthLogin = () => {
       backHref="/"
       title={
         <>
-          Please fill the form to <span className="text-primary">Login</span>
+          <span className="text-primary">Login </span>to continue
         </>
       }
     >
@@ -42,8 +52,8 @@ export const AuthLogin = () => {
             size="sm"
             variant="underlined"
             className="outline-none hover:outline-none focus:outline-none"
-            {...register('email')}
-            isInvalid={!!errors.email}
+            {...register('username')}
+            isInvalid={!!errors.username}
           />
           <Input
             label="Password"

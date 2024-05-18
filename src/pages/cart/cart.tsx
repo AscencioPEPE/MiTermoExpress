@@ -32,7 +32,10 @@ export const Cart = () => {
      */
     const isUserLogged = !!currentUser.address;
 
-    if (!isUserLogged) setLocation('/auth/guest');
+    if (!isUserLogged) {
+      setLocation('/auth/guest');
+      return;
+    }
     /**
      * Get the cart and mapping the data for form post
      */
@@ -41,7 +44,7 @@ export const Cart = () => {
       price: Number(formattedFixed(product.price)),
       variants: product.variants[0]['color'],
       capacity: product.capacity,
-      quantity: product.quantityToBuy, // !Error backend
+      quantity: product.quantityToBuy,
     }));
     /**
      * Get the customer and mapping the data for form post

@@ -5,30 +5,42 @@ import { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline';
 import useUserStore from '../../zustand/user';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterSchema, builderRegisterSchema } from '../../lib/schemas/schema-auth';
+import { RegisterSchema, builderRegisterCustomerSchema } from '../../lib/schemas/schema-auth';
+import { useLocation } from 'wouter';
+import useApi from '../../hooks/useApi';
+import { User } from '@/src/types/user';
 
 export const AuthRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [_, setLocation] = useLocation();
   const { storageCurrentUser } = useUserStore();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterSchema>({ resolver: zodResolver(builderRegisterSchema) });
+  } = useForm<RegisterSchema>({ resolver: zodResolver(builderRegisterCustomerSchema) });
+  console.log('errors: ', errors);
+
+  const { post: registerCustomer } = useApi({
+    method: 'POST',
+    key: ['auth'],
+    url: 'auth/register/customer',
+  });
 
   const onSubmit = (data: RegisterSchema) => {
+    console.log('data: ', data);
     const hasErrors = Object.entries(errors).length > 0;
 
     if (hasErrors) return;
 
-    // storageCurrentUser({ ...data, isGuest: true } as User);
-    // setLocation('/cart', { replace: true });
+    registerCustomer.mutateAsync({ ...data, orders: [] } as User);
   };
 
   return (
     <LayoutAuth
       backHref="/"
+      reverseContent
       title={
         <>
           Please fill the form to <span className="text-primary">Register</span> to us!

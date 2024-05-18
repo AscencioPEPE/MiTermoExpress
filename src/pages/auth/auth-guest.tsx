@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Input, Image, Link, Button } from '@nextui-org/react';
+import { Input, Link, Button } from '@nextui-org/react';
 import useUserStore from '../../zustand/user';
 import { useLocation } from 'wouter';
 import { GuestSchema, builderGuestSchema } from '../../lib/schemas/schema-auth';
