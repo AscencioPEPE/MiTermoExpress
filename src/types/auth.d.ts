@@ -14,4 +14,7 @@ export type CustomerRegisterResponseApi = {
   phone: string;
 };
 
-export type AdminRegisterResponseApi = Admin;
+export type AdminRegisterResponseApi = {
+  username: string;
+  role: 'ADMIN' | 'SUPER_ADMIN' | 'GUEST';
+};

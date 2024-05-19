@@ -28,8 +28,15 @@ export const builderRegisterCustomerSchema = z.object({
     .optional(),
 });
 
+export const builderRegisterAdminSchema = z.object({
+  username: z.string(),
+  password: z.string().optional(),
+});
+
 export type GuestSchema = z.infer<typeof builderGuestSchema>;
 
 export type LoginSchema = z.infer<typeof builderLoginSchema>;
 
 export type RegisterCustomerSchema = z.infer<typeof builderRegisterCustomerSchema>;
+
+export type RegisterAdminSchema = z.infer<typeof builderRegisterAdminSchema>;

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { login, registerCustomer } from '../sdk/auth';
-import { CustomerRegisterResponseApi, LoginResponseApi } from '../types/auth';
-import { LoginSchema, RegisterCustomerSchema } from '../lib/schemas/schema-auth';
+import { login, registerAdmin, registerCustomer } from '../sdk/auth';
+import { CustomerRegisterResponseApi, LoginResponseApi, AdminRegisterResponseApi } from '../types/auth';
+import { LoginSchema, RegisterCustomerSchema, RegisterAdminSchema } from '../lib/schemas/schema-auth';
 import { useLocation } from 'wouter';
 import { toast } from 'react-toastify';
 import useUserStore from '../zustand/user';
@@ -29,6 +29,20 @@ export const useRegisterCustomerQuery = () => {
     mutationFn: (credentials: RegisterCustomerSchema) => registerCustomer(credentials),
     onSuccess: (data: CustomerRegisterResponseApi) => {
       console.log('Welcome! ', data.name);
+      setLocation('/auth/login');
+    },
+    onError: () => toast('An error was ocurred! Please try again'),
+  });
+};
+
+export const useRegisterAdminQuery = () => {
+  const [_, setLocation] = useLocation();
+
+  return useMutation({
+    mutationKey: ['auth'],
+    mutationFn: (credentials: RegisterAdminSchema) => registerAdmin(credentials),
+    onSuccess: (data: AdminRegisterResponseApi) => {
+      console.log('Welcome! ', data.username);
       setLocation('/auth/login');
     },
     onError: () => toast('An error was ocurred! Please try again'),

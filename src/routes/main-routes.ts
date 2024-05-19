@@ -4,6 +4,7 @@ import Products from '../pages/products';
 import { AuthGuest } from '../pages/auth/auth-guest';
 import { AuthLogin } from '../pages/auth/auth-login';
 import { AuthRegisterCustomer } from '../pages/auth/auth-register';
+import { AuthRegisterAdmin } from '../pages/auth/auth-register-admin';
 import Cart from '../pages/cart';
 import { Failed, Success } from '../pages/transaction/status';
 
@@ -25,6 +26,10 @@ export const MainRoutes: RouteProps[] = [
   {
     path: '/auth/register/customer',
     component: AuthRegisterCustomer,
+  },
+  {
+    path: '/auth/register/admin',
+    component: AuthRegisterAdmin,
   },
   {
     path: '/products',
