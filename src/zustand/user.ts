@@ -19,7 +19,7 @@ const useUserStore = create(
         phone: '',
         isGuest: undefined,
         password: undefined,
-        token: undefined,
+        token: '',
       },
       storageCurrentUser: (currentUser) => {
         return set((state) => ({
@@ -43,7 +43,7 @@ const useUserStore = create(
             phone: '',
             isGuest: undefined,
             password: undefined,
-            token: undefined,
+            token: '',
           },
         }));
       },

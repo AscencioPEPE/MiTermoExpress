@@ -17,7 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
+  --foreground: 210 0% 25%;
   --card: 255, 255, 255;
 
   --popover: 0 0% 100%;
@@ -40,7 +40,7 @@
 
 .dark {
   --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
+  --foreground: 210 0% 100%;
 
   --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;

@@ -1,18 +1,19 @@
 import { Button, Divider, Image } from '@nextui-org/react';
 import useCartStore from '../../zustand/cart';
-import { CartProduct, Product } from '@/src/types/products';
+import { CartProduct } from '@/src/types/products';
 import { ModalConfirmation } from '../../components/modal-confirmation';
-import useApi from '../../hooks/useApi';
 import { useState } from 'react';
 import useUserStore from '../../zustand/user';
 import { formattedFixed } from '../../lib/formater';
 import { useLocation } from 'wouter';
-import { User } from '@/src/types/user';
+import { usePaymentQuery } from '../../services/usePayment';
+import { Payment } from '@/src/types/payment';
 
 export const Cart = () => {
   const { currentCartItems, removeCartItem, updateCartItem } = useCartStore();
   const { currentUser, storageCurrentUser } = useUserStore();
   const [_, setLocation] = useLocation();
+  const { mutateAsync: payment, isPending } = usePaymentQuery();
 
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState<CartProduct | undefined>(undefined);
@@ -39,7 +40,7 @@ export const Cart = () => {
     /**
      * Get the cart and mapping the data for form post
      */
-    const items = currentCartItems.map((product) => ({
+    const items: Payment['items'] = currentCartItems.map((product) => ({
       name: product.name,
       price: Number(formattedFixed(product.price)),
       variants: product.variants[0]['color'],
@@ -49,7 +50,7 @@ export const Cart = () => {
     /**
      * Get the customer and mapping the data for form post
      */
-    const customer: User = {
+    const customer: Payment['customer'] = {
       address: currentUser.address,
       email: currentUser.email,
       name: currentUser.name,
@@ -58,21 +59,15 @@ export const Cart = () => {
     /**
      * Get the customer and products
      */
-    const paymentData = {
+    const paymentData: Payment = {
       items,
       customer,
     };
     /**
      * Do the payment
      */
-    payment?.mutateAsync(paymentData);
+    payment(paymentData);
   };
-
-  const { post: payment } = useApi({
-    method: 'POST',
-    key: ['payment'],
-    url: 'api/payments/checkout/hosted',
-  });
 
   return (
     <>
@@ -145,16 +140,16 @@ export const Cart = () => {
                 <span className="text-softWhite/80">{`${currentCartItems.reduce((a, b) => a + Number(b.price), 0)}`}</span>
               </div>
               <div className="flex items-center gap-5">
-                <span className="text-softWhite/60">Envio:</span>
-                <span className="text-softWhite/80">Gratis</span>
+                <span className="text-softWhite/60">Shipped:</span>
+                <span className="text-softWhite/80">Free</span>
               </div>
               <Divider className="bg-softWhite/20" />
               <div className="flex items-center gap-5">
                 <span className="text-softWhite/60">Total: </span>
                 <span className="text-softWhite/80">{`${currentCartItems.reduce((a, b) => a + Number(b.price), 0)}`}</span>
               </div>
-              <Button className="bg-blue-500 font-bold text-white" onPress={handlePayment}>
-                Continuar compra
+              <Button className="bg-blue-500 font-bold text-white" onPress={handlePayment} isLoading={isPending}>
+                Go to buy!
               </Button>
             </div>
           </div>

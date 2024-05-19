@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { OrderProductSchema } from './schema-order';
 
 export const builderGuestSchema = z.object({
   name: z.string().min(1),
@@ -19,11 +20,16 @@ export const builderRegisterCustomerSchema = z.object({
   phone: z.string().min(8),
   address: z.string().min(1),
   name: z.string().min(1),
-  orders: z.array(z.string()).optional(),
+  order: z
+    .object({
+      status: z.enum(['Pending', 'Processing', 'Shipped', 'Delivered', '']),
+      products: z.array(OrderProductSchema),
+    })
+    .optional(),
 });
 
 export type GuestSchema = z.infer<typeof builderGuestSchema>;
 
 export type LoginSchema = z.infer<typeof builderLoginSchema>;
 
-export type RegisterSchema = z.infer<typeof builderRegisterCustomerSchema>;
+export type RegisterCustomerSchema = z.infer<typeof builderRegisterCustomerSchema>;

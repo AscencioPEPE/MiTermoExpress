@@ -3,38 +3,33 @@ import { LayoutAuth } from '../../components/layout-auth';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline';
-import useUserStore from '../../zustand/user';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterSchema, builderRegisterCustomerSchema } from '../../lib/schemas/schema-auth';
-import { useLocation } from 'wouter';
-import useApi from '../../hooks/useApi';
-import { User } from '@/src/types/user';
+import { RegisterCustomerSchema, builderRegisterCustomerSchema } from '../../lib/schemas/schema-auth';
+import { useRegisterCustomerQuery } from '../../services/useAuth';
 
-export const AuthRegister = () => {
+export const AuthRegisterCustomer = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [_, setLocation] = useLocation();
-  const { storageCurrentUser } = useUserStore();
+
+  const { mutateAsync: registerCustomer, isPending: isLoading } = useRegisterCustomerQuery();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterSchema>({ resolver: zodResolver(builderRegisterCustomerSchema) });
-  console.log('errors: ', errors);
+  } = useForm<RegisterCustomerSchema>({ resolver: zodResolver(builderRegisterCustomerSchema) });
 
-  const { post: registerCustomer } = useApi({
-    method: 'POST',
-    key: ['auth'],
-    url: 'auth/register/customer',
-  });
-
-  const onSubmit = (data: RegisterSchema) => {
-    console.log('data: ', data);
+  const onSubmit = (data: RegisterCustomerSchema) => {
     const hasErrors = Object.entries(errors).length > 0;
 
     if (hasErrors) return;
 
-    registerCustomer.mutateAsync({ ...data, orders: [] } as User);
+    registerCustomer({
+      ...data,
+      order: {
+        status: '',
+        products: [],
+      },
+    });
   };
 
   return (
@@ -105,7 +100,7 @@ export const AuthRegister = () => {
               </Button>
             }
           />
-          <Button color="primary" className="text-md font-bold" type="submit">
+          <Button color="primary" className="text-md font-bold" type="submit" isLoading={isLoading}>
             Register me!
           </Button>
         </div>

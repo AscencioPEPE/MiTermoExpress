@@ -7,6 +7,8 @@ import { queryClient } from './lib/queryClient';
 import Layout from './components/layout';
 import { NextUIProvider } from '@nextui-org/react';
 import 'react-modern-drawer/dist/index.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -17,6 +19,17 @@ function App() {
             {MainRoutes.map((route, index) => (
               <Route {...route} key={index} />
             ))}
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
           </Layout>
         </Switch>
       </NextUIProvider>

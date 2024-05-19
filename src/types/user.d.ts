@@ -8,8 +8,3 @@ export type User = {
   orders?: string[];
   token?: string;
 };
-
-export type UserResponseApi = {
-  accessToken: string;
-  tokenType: string;
-};

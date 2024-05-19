@@ -3,7 +3,7 @@ import Home from '../home';
 import Products from '../pages/products';
 import { AuthGuest } from '../pages/auth/auth-guest';
 import { AuthLogin } from '../pages/auth/auth-login';
-import { AuthRegister } from '../pages/auth/auth-register';
+import { AuthRegisterCustomer } from '../pages/auth/auth-register';
 import Cart from '../pages/cart';
 import { Failed, Success } from '../pages/transaction/status';
 
@@ -23,8 +23,8 @@ export const MainRoutes: RouteProps[] = [
     component: AuthLogin,
   },
   {
-    path: '/auth/register',
-    component: AuthRegister,
+    path: '/auth/register/customer',
+    component: AuthRegisterCustomer,
   },
   {
     path: '/products',

@@ -3,17 +3,13 @@ import { LayoutAuth } from '../../components/layout-auth';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline';
-import useUserStore from '../../zustand/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, builderLoginSchema } from '../../lib/schemas/schema-auth';
-import { useLocation } from 'wouter';
-import useApi from '../../hooks/useApi';
-import { User } from '@/src/types/user';
+import { useLoginQuery } from '../../services/useAuth';
 
 export const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [_, setLocation] = useLocation();
-  const { storageCurrentUser } = useUserStore();
+  const { mutateAsync: login, isPending } = useLoginQuery();
 
   const {
     register,
@@ -21,19 +17,12 @@ export const AuthLogin = () => {
     formState: { errors },
   } = useForm<LoginSchema>({ resolver: zodResolver(builderLoginSchema) });
 
-  const { post: signIn } = useApi({
-    method: 'POST',
-    key: ['auth'],
-    url: 'auth/login',
-  });
-
   const onSubmit = (data: LoginSchema) => {
     const hasErrors = Object.entries(errors).length > 0;
 
     if (hasErrors) return;
 
-    signIn.mutateAsync(data);
-    storageCurrentUser(data as User);
+    login(data);
   };
 
   return (
@@ -78,7 +67,7 @@ export const AuthLogin = () => {
               </Button>
             }
           />
-          <Button color="primary" type="submit" className="text-md mt-8 font-bold">
+          <Button color="primary" type="submit" className="text-md mt-8 font-bold" isLoading={isPending}>
             Login
           </Button>
         </div>
