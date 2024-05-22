@@ -18,14 +18,14 @@ export const LayoutAuth = ({ backHref, title, coverImg, children, reverseContent
         <div
           className={`${reverseContent ? 'flex-row-reverse' : 'flex-row'} flex h-full w-5/6 items-center justify-center shadow-gray`}
         >
-          <div className="flex h-full w-1/2 flex-col items-start justify-between  rounded-lg bg-[#1A1A1A] p-5">
+          <div className="z-2 absolute flex h-full w-full flex-col items-start justify-between rounded-lg bg-[#1A1A1A]  p-5 md:relative md:w-1/2">
             <Link className="m-0 cursor-pointer bg-transparent text-softWhite" href={backHref}>
               <ArrowLeftIcon className="w-[25px]" />
             </Link>
             <h3 className="w-full text-center text-2xl font-bold text-softWhite">{title}</h3>
             {children}
           </div>
-          <div className="h-full w-1/2 rounded-lg ">
+          <div className="hidden h-full w-1/2 rounded-lg md:inline-block">
             <div className="size-full">
               <Image
                 src={

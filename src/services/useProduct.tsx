@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { createProduct, getProduct, listProducts, removeProduct, updateProduct } from '../sdk/product';
-import { Products } from '../types/products';
+import { Product, Products } from '../types/products';
 
 /**
  * Retrieve a list of products, you can added queryPArams to get filters
@@ -18,7 +18,7 @@ export const useListProductQuery = ({ limit = 20, page = 1, filters = [] }) => {
  * Get only one product by name
  */
 export const useProductQuery = (productName: string) =>
-  useQuery({ queryKey: ['product'], queryFn: () => getProduct(productName) });
+  useQuery<Product>({ queryKey: ['product'], queryFn: () => getProduct(productName) });
 /**
  * Create a new Product
  */

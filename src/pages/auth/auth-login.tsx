@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, builderLoginSchema } from '../../lib/schemas/schema-auth';
 import { useLoginQuery } from '../../services/useAuth';
 
-export const AuthLogin = () => {
+const AuthLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { mutateAsync: login, isPending } = useLoginQuery();
 
@@ -16,7 +16,6 @@ export const AuthLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginSchema>({ resolver: zodResolver(builderLoginSchema) });
-  console.log('errors: ', errors);
 
   const onSubmit = (data: LoginSchema) => {
     const hasErrors = Object.entries(errors).length > 0;
@@ -78,10 +77,12 @@ export const AuthLogin = () => {
       </p>
       <p className="w-full text-center">
         Do you want to create an{' '}
-        <Link href="/auth/register" className="text-secondary">
+        <Link href="/auth/register/customer" className="text-secondary">
           account?
         </Link>
       </p>
     </LayoutAuth>
   );
 };
+
+export default AuthLogin;

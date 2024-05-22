@@ -11,7 +11,7 @@ export const listProducts = async (queryParams: string) => {
 
 export const getProduct = async (productName: string) => {
   const { data } = await apiRequest({
-    url: `product?${productName}`,
+    url: `product/${productName}`,
     method: 'GET',
   });
 

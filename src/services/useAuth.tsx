@@ -28,7 +28,6 @@ export const useRegisterCustomerQuery = () => {
     mutationKey: ['auth'],
     mutationFn: (credentials: RegisterCustomerSchema) => registerCustomer(credentials),
     onSuccess: (data: CustomerRegisterResponseApi) => {
-      console.log('Welcome! ', data.name);
       setLocation('/auth/login');
     },
     onError: () => toast('An error was ocurred! Please try again'),
@@ -42,7 +41,6 @@ export const useRegisterAdminQuery = () => {
     mutationKey: ['auth'],
     mutationFn: (credentials: RegisterAdminSchema) => registerAdmin(credentials),
     onSuccess: (data: AdminRegisterResponseApi) => {
-      console.log('Welcome! ', data.username);
       setLocation('/auth/login');
     },
     onError: () => toast('An error was ocurred! Please try again'),

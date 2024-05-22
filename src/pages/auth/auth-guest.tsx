@@ -6,7 +6,8 @@ import { GuestSchema, builderGuestSchema } from '../../lib/schemas/schema-auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '@/src/types/user';
 import { LayoutAuth } from '../../components/layout-auth';
-export const AuthGuest = () => {
+
+const AuthGuest = () => {
   const [_, setLocation] = useLocation();
   const { storageCurrentUser } = useUserStore();
 
@@ -85,3 +86,5 @@ export const AuthGuest = () => {
     </LayoutAuth>
   );
 };
+
+export default AuthGuest;

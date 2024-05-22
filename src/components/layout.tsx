@@ -4,7 +4,7 @@ import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outl
 import { Chip, Image, Link } from '@nextui-org/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import useUserStore from '../zustand/user';
-
+import { classNames } from '../lib/classes';
 import { Fragment, ReactNode } from 'react';
 
 const user = {
@@ -24,17 +24,13 @@ const userNavigation = [
   // { name: 'Offers', href: '#' },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
   const { currentUser } = useUserStore();
-  console.log(currentUser);
+
   return (
     <AnimatePresence>
       <div className="min-h-full bg-[url('/images/background.jpg')] bg-cover bg-fixed bg-no-repeat">
@@ -54,7 +50,7 @@ export default function Layout({ children }: LayoutProps) {
                     <Link href="/">
                       <div className="flex shrink-0 items-center justify-center gap-1">
                         <Image
-                          className="size-6"
+                          className="z-1 size-6"
                           src="https://cdn-icons-png.flaticon.com/128/562/562031.png"
                           alt="Your Company"
                         />
@@ -119,7 +115,7 @@ export default function Layout({ children }: LayoutProps) {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
+                            <Menu.Items className="z-1 absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
                               {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
@@ -210,7 +206,7 @@ export default function Layout({ children }: LayoutProps) {
         </Disclosure>
 
         <main>
-          <div className="min-h-100dvh-minus-4rem pb-10">{children}</div>
+          <div className="min-h-100dvh-minus-4rem md:pb-10">{children}</div>
         </main>
       </div>
     </AnimatePresence>

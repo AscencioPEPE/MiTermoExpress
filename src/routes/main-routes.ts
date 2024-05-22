@@ -1,14 +1,17 @@
 import { RouteProps } from 'wouter';
-import Home from '../home';
-import Products from '../pages/products';
-import { AuthGuest } from '../pages/auth/auth-guest';
-import { AuthLogin } from '../pages/auth/auth-login';
-import { AuthRegisterCustomer } from '../pages/auth/auth-register';
-import { AuthRegisterAdmin } from '../pages/auth/auth-register-admin';
-import Cart from '../pages/cart';
-import { Failed, Success } from '../pages/transaction/status';
+import { lazy } from 'react';
+// import AuthLogin from '../pages/auth/auth-login';
 
-// TODO: Do lazy load routes
+const Home = lazy(() => import('../home'));
+const Products = lazy(() => import('../pages/products'));
+const ProductDetails = lazy(() => import('../pages/products/product-details'));
+const Cart = lazy(() => import('../pages/cart'));
+const AuthGuest = lazy(() => import('../pages/auth/auth-guest'));
+const AuthLogin = lazy(() => import('../pages/auth/auth-login'));
+const AuthRegisterCustomer = lazy(() => import('../pages/auth/auth-register'));
+const AuthRegisterAdmin = lazy(() => import('../pages/auth/auth-register-admin'));
+const Failure = lazy(() => import('../pages/transaction/Failure'));
+const Success = lazy(() => import('../pages/transaction/Success'));
 
 export const MainRoutes: RouteProps[] = [
   {
@@ -16,13 +19,14 @@ export const MainRoutes: RouteProps[] = [
     component: Home,
   },
   {
-    path: '/auth/guest',
-    component: AuthGuest,
-  },
-  {
     path: '/auth/login',
     component: AuthLogin,
   },
+  {
+    path: '/auth/guest',
+    component: AuthGuest,
+  },
+
   {
     path: '/auth/register/customer',
     component: AuthRegisterCustomer,
@@ -36,15 +40,19 @@ export const MainRoutes: RouteProps[] = [
     component: Products,
   },
   {
+    path: '/product/:productName',
+    component: ProductDetails,
+  },
+  {
     path: '/cart',
     component: Cart,
   },
   {
-    path: '/success',
+    path: '/success?session_id=:sessionId',
     component: Success,
   },
   {
     path: '/failure',
-    component: Failed,
+    component: Failure,
   },
 ];

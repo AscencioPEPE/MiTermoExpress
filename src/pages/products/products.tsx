@@ -75,21 +75,26 @@ export const Products = () => {
                 {allProducts?.products?.map((product, index) => (
                   <div
                     key={index}
-                    className="flex  w-full flex-col justify-between gap-y-2 rounded-lg  bg-[#1A1A1A] p-3 text-white/40  shadow-lg md:h-[320px] md:w-[250px] "
+                    className="flex w-full  flex-col gap-3 rounded-lg bg-[#1A1A1A] p-3 text-white/40  shadow-lg md:h-[320px] md:w-[250px] "
                   >
-                    <div className="flex items-center justify-center rounded-lg bg-[#0f0e0e8c]">
-                      <Image
-                        src="https://thermos.com/cdn/shop/products/SK2020MDB_PRES_1000px.png?v=1624023598"
-                        alt="thermos"
-                        className="object-contain object-center"
-                        classNames={{ img: 'md:w-[100px] md:h-[100px] h-[150px]' }}
-                      />
-                    </div>
-                    <div className="flex h-full flex-col gap-2">
-                      <h4 className="truncate font-semibold text-softWhite">{product.name}</h4>
-                      <p className="line-clamp-3 text-sm">{product.description}</p>
-                      <span className="text-softWhite">${product.price}</span>
-                    </div>
+                    <Link
+                      href={`/product/${product.name}`}
+                      className="flex h-full cursor-pointer flex-col justify-between "
+                    >
+                      <div className="flex w-full items-center justify-center rounded-lg bg-[#0f0e0e8c]">
+                        <Image
+                          src="https://thermos.com/cdn/shop/products/SK2020MDB_PRES_1000px.png?v=1624023598"
+                          alt="thermos"
+                          className="object-contain object-center"
+                          classNames={{ img: 'md:w-[100px] md:h-[100px] h-[150px]' }}
+                        />
+                      </div>
+                      <div className="flex h-full w-full flex-col gap-2">
+                        <h4 className="truncate font-semibold text-softWhite ">{product.name}</h4>
+                        <p className="line-clamp-3 text-sm text-white/40">{product.description}</p>
+                        <span className="text-softWhite">${product.price}</span>
+                      </div>
+                    </Link>
                     <Divider className="my-4 bg-white/10 md:m-0" />
                     <div className="flex w-full gap-2">
                       <Button
@@ -100,8 +105,8 @@ export const Products = () => {
                           setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
                         }}
                       >
-                        <ShoppingCartIcon className="size-[20px]" />
-                        <span className="text-xs">Add to cart</span>
+                        <ShoppingCartIcon className="size-[20px] text-white/40" />
+                        <span className="text-xs text-white/40">Add to cart</span>
                       </Button>
                       <Link
                         className="flex w-4/6 items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black"

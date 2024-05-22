@@ -33,8 +33,6 @@ const config = () => {
   };
 };
 
-console.log(config().headers.Authorization);
-
 export const apiRequest = axios.create({
   baseURL,
   headers: {

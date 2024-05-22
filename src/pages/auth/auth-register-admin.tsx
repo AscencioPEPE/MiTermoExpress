@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterAdminSchema, builderRegisterAdminSchema } from '../../lib/schemas/schema-auth';
 import { useRegisterAdminQuery } from '../../services/useAuth';
 
-export const AuthRegisterAdmin = () => {
+const AuthRegisterAdmin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { mutateAsync: registerAdmin, isPending } = useRegisterAdminQuery();
 
@@ -84,3 +84,5 @@ export const AuthRegisterAdmin = () => {
     </LayoutAuth>
   );
 };
+
+export default AuthRegisterAdmin;

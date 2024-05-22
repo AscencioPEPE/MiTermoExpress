@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterCustomerSchema, builderRegisterCustomerSchema } from '../../lib/schemas/schema-auth';
 import { useRegisterCustomerQuery } from '../../services/useAuth';
 
-export const AuthRegisterCustomer = () => {
+const AuthRegisterCustomer = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync: registerCustomer, isPending: isLoading } = useRegisterCustomerQuery();
@@ -117,3 +117,5 @@ export const AuthRegisterCustomer = () => {
     </LayoutAuth>
   );
 };
+
+export default AuthRegisterCustomer;
