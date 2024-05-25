@@ -1,4 +1,4 @@
-import { Button, Divider, Image, ScrollShadow } from '@nextui-org/react';
+import { Button, Divider, Image, Tooltip } from '@nextui-org/react';
 import useCartStore from '../../zustand/cart';
 import { CartProduct } from '@/src/types/products';
 import { ModalConfirmation } from '../../components/modal-confirmation';
@@ -9,16 +9,17 @@ import { useLocation } from 'wouter';
 import { usePaymentQuery } from '../../services/usePayment';
 import { Payment } from '@/src/types/payment';
 import Drawer from '../../components/drawer-payment';
-import useScroll from '../../hooks/useScroll';
 import { classNames } from '../../lib/classes';
-import { ModalSimple } from '../../components/modal-simple';
 import { ModifyProduct } from '../../components/modify-product';
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 
-const SHIPPED = 0;
+const SHIPPING = 0;
 
 export const Cart = () => {
   const { currentCartItems, removeCartItem, updateCartItem } = useCartStore();
-  const { currentUser, storageCurrentUser } = useUserStore();
+  console.log('currentCartItems: ', currentCartItems);
+
+  const { currentUser } = useUserStore();
   const [_, setLocation] = useLocation();
   const { mutateAsync: payment, isPending } = usePaymentQuery();
 
@@ -27,15 +28,6 @@ export const Cart = () => {
   const [modalData, setModalData] = useState<CartProduct | undefined>(undefined);
   const [productToModify, setProductToModify] = useState<CartProduct | undefined>(undefined);
   const [modifyModal, setModifyModal] = useState(false);
-
-  const handleSubtract = (product: CartProduct) => {
-    if (product.quantityToBuy > 1) {
-      updateCartItem(product.name, product.quantityToBuy - 1);
-      return;
-    }
-    setModalData(product);
-    setShowModal(true);
-  };
 
   const handlePayment = () => {
     /**
@@ -53,10 +45,11 @@ export const Cart = () => {
     const items: Payment['items'] = currentCartItems.map((product) => ({
       name: product.name,
       price: Number(formattedFixed(product.price)),
-      variants: product.variants[0]['color'],
+      variants: product.variants[0],
       capacity: product.capacity,
       quantity: product.quantityToBuy,
     }));
+    console.log(items, 'items');
     /**
      * Get the customer and mapping the data for form post
      */
@@ -112,8 +105,8 @@ export const Cart = () => {
                 <div className="w-100 flex h-[100px] w-full items-center">
                   <div className="h-100 flex w-full items-center ">
                     <Image
-                      src="https://thermos.com/cdn/shop/products/SK2020MDB_PRES_1000px.png?v=1624023598"
-                      classNames={{ img: 'min-w-[80px] w-[150px] md:size-[100px] z-1' }}
+                      src={product?.variants[0]?.urlImage}
+                      classNames={{ img: 'min-w-[80px] w-[150px] md:size-[100px] z-1 object-contain' }}
                       alt="thermos"
                     />
                     <div className="flex w-full flex-col gap-2">
@@ -134,7 +127,7 @@ export const Cart = () => {
                           Modificar
                         </Button>
                         <Button
-                          className="order-0 bg-transparent text-danger outline-none hover:outline-none focus:outline-none md:text-softWhite/80"
+                          className="order-0 bg-transparent text-danger outline-none hover:outline-none focus:outline-none"
                           onPress={() => {
                             setModalData(product);
                             setShowModal(true);
@@ -162,17 +155,18 @@ export const Cart = () => {
           <div className="flex flex-col p-3">
             <div className="flex flex-col justify-center gap-5 rounded-md bg-[#1A1A1A] px-2 py-5 shadow-lg">
               <div className="flex items-center gap-5">
-                <span className="text-softWhite/60">{`Producto (${currentCartItems.length}):`}</span>
-                <span className="text-softWhite/80">{getTotal()}</span>
-              </div>
-              <div className="flex items-center gap-5">
-                <span className="text-softWhite/60">Shipped:</span>
-                <span className="text-softWhite/80">Free</span>
+                <span className="text-softWhite/60">Shipping:</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-softWhite/80">Free</span>
+                  <Tooltip content="Only Mexico" className="bg-[#0f0e0e] text-white/50">
+                    <QuestionMarkCircleIcon className="size-[25px] cursor-pointer text-blue-500" />
+                  </Tooltip>
+                </div>
               </div>
               <Divider className="bg-softWhite/20" />
               <div className="flex items-center gap-5">
                 <span className="text-softWhite/60">Total: </span>
-                <span className="text-softWhite/80">{formattedPrice(Math.abs(getTotal() + SHIPPED || 0))}</span>
+                <span className="text-softWhite/80">{formattedPrice(Math.abs(getTotal() + SHIPPING || 0))}</span>
               </div>
               <Button className="bg-blue-500 font-bold text-white" onPress={handlePayment} isLoading={isPending}>
                 Go to buy!
@@ -194,8 +188,8 @@ export const Cart = () => {
               <p className="font-bold">Free</p>
             </div>
             <div className="max-h-[180px] w-full overflow-auto">
-              {currentCartItems.map((item) => (
-                <div className="flex items-center justify-between border-b-1 border-white/10 py-2">
+              {currentCartItems.map((item, index) => (
+                <div className="flex items-center justify-between border-b-1 border-white/10 py-2" key={index}>
                   <p className="w-1/3 text-sm">{item.name}</p>
                   <p className="w-1/3 text-sm">({item.quantityToBuy})</p>
                   <p className="w-1/3 text-sm font-bold">{formattedPrice(Math.abs(item.price * item.quantityToBuy))}</p>

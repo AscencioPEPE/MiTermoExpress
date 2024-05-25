@@ -1,3 +1,4 @@
+import { Variant } from './products';
 import { User } from './user';
 
 export type Payment = {
@@ -8,7 +9,7 @@ export type Payment = {
 export type ProductItems = {
   name: string;
   price: number;
-  variants: string;
+  variants: Variant;
   capacity: number;
   quantity: number;
 };

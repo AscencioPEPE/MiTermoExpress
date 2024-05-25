@@ -13,6 +13,13 @@ export type CustomerRegisterResponseApi = {
   orders: null;
   phone: string;
 };
+export type GuestRegisterResponseApi = {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  orders: null;
+};
 
 export type AdminRegisterResponseApi = {
   username: string;

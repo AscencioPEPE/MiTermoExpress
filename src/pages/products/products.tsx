@@ -9,6 +9,7 @@ import useDimensions from '../../hooks/useDimensions';
 import { useListProductQuery } from '../../services/useProduct';
 import { SkeletonProduct } from '../../components/skeleton-products';
 import { CartProduct } from '@/src/types/products';
+import { classNames } from '../../lib/classes';
 
 export interface CartDrawer {
   isActive: boolean;
@@ -32,8 +33,8 @@ export const Products = () => {
 
   return (
     <motion.div
-      initial={{ y: '100vh' }}
-      animate={{ y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="flex size-full flex-col md:flex-row md:gap-5"
     >
@@ -67,7 +68,7 @@ export const Products = () => {
           ) : (
             <h3 className="my-5 text-lg font-bold text-softWhite">All Products</h3>
           )}
-          <div className="flex w-full flex-wrap sm:justify-between sm:gap-5 md:justify-normal">
+          <div className="flex w-full flex-wrap gap-3 sm:justify-between sm:gap-5 md:justify-normal">
             {isLoading ? (
               <SkeletonProduct />
             ) : (
@@ -83,10 +84,12 @@ export const Products = () => {
                     >
                       <div className="flex w-full items-center justify-center rounded-lg bg-[#0f0e0e8c]">
                         <Image
-                          src="https://thermos.com/cdn/shop/products/SK2020MDB_PRES_1000px.png?v=1624023598"
+                          src={product?.variants?.[0]?.urlImage}
                           alt="thermos"
-                          className="object-contain object-center"
-                          classNames={{ img: 'md:w-[100px] md:h-[100px] h-[150px]' }}
+                          className="object-contain object-center py-2"
+                          classNames={{
+                            img: 'md:size-[140px] h-[150px]',
+                          }}
                         />
                       </div>
                       <div className="flex h-full w-full flex-col gap-2">
@@ -100,7 +103,7 @@ export const Products = () => {
                       <Button
                         className="text-gray flex w-full gap-1 border-1 border-white/20 bg-transparent"
                         onPress={() => {
-                          storageCartItem(product as CartProduct);
+                          storageCartItem({ ...product, variants: Array(product.variants?.[0]) } as CartProduct);
                           const isSmallScreen = size === 'sm' || size === 'md' ? true : false;
                           setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
                         }}
@@ -111,7 +114,9 @@ export const Products = () => {
                       <Link
                         className="flex w-4/6 items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black"
                         href="/cart"
-                        onPress={() => storageCartItem(product as CartProduct)}
+                        onPress={() =>
+                          storageCartItem({ ...product, variants: Array(product.variants?.[0]) } as CartProduct)
+                        }
                       >
                         Buy
                       </Link>

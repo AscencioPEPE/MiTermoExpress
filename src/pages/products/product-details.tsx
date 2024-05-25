@@ -1,21 +1,49 @@
-import { useState } from 'react';
-import { Disclosure, RadioGroup, Tab } from '@headlessui/react';
-import { StarIcon } from '@heroicons/react/20/solid';
-import { HeartIcon, MinusIcon, PlusIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
+import { RadioGroup, Tab } from '@headlessui/react';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { classNames } from '../../lib/classes';
 import { useProductQuery } from '../../services/useProduct';
 import { useParams } from 'wouter';
 import { formattedPrice } from '../../lib/formater';
-import { Button, Link } from '@nextui-org/react';
+import { Button, Link, Tooltip } from '@nextui-org/react';
+import { getBgColor } from '../../lib/colors';
+import useCartStore from '../../zustand/cart';
+import { CartProduct } from '@/src/types/products';
+import { DrawerCart } from '../../components/drawer-cart';
+import useDimensions from '../../hooks/useDimensions';
+import { SkeletonProductDetail } from '../../components/skeleton-product-details';
 
 export default function ProductDetails() {
   const { productName }: { productName: string } = useParams();
+  const { storageCartItem } = useCartStore();
+  const size = useDimensions();
 
-  const { data: product } = useProductQuery(productName);
-  const [selectedColor, setSelectedColor] = useState();
+  const [showCurrentCart, setShowCurrentCart] = useState({
+    isMobile: false,
+    isActive: false,
+  });
+
+  const { data: product, isLoading } = useProductQuery(productName);
+
+  const [selectedColor, setSelectedColor] = useState(product?.variants?.[0]?.color);
+
+  const getProductsByColor = product?.variants
+    ?.filter((variant) => variant.color === selectedColor)
+    .map((variant) => ({
+      urlImage: variant.urlImage,
+      urlImageBack: variant.urlImageBack,
+    }))
+    .flatMap((variant) => [variant.urlImage, variant.urlImageBack])
+    .filter((url) => url);
+
+  useEffect(() => {
+    setSelectedColor(product?.variants?.[0]?.color);
+  }, [product]);
+
+  if (isLoading) return <SkeletonProductDetail />;
 
   return (
-    <div className="mt-5 bg-transparent">
+    <div className="bg-transparent py-5">
       <div className="mx-auto max-w-2xl px-4  sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}
@@ -23,16 +51,16 @@ export default function ProductDetails() {
             {/* Image selector */}
             <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {product?.variants?.map((image) => (
+                {getProductsByColor?.map((image, index) => (
                   <Tab
-                    key={image?.id}
+                    key={index}
                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-[#0f0e0e8c] text-sm font-medium uppercase text-gray-900  outline-none hover:border-primary hover:ring-0  focus:outline-none"
                   >
                     {({ selected }) => (
                       <>
-                        <span className="sr-only">{image?.id}</span>
+                        <span className="sr-only">{index}</span>
                         <span className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-md">
-                          <img src={image?.urlImage} alt="" className="size-5/6 object-contain object-center" />
+                          <img src={image} alt="" className="size-5/6 object-contain object-center" />
                         </span>
                         <span
                           className={classNames(
@@ -49,10 +77,10 @@ export default function ProductDetails() {
             </div>
 
             <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-              {product?.variants?.map((image) => (
-                <Tab.Panel key={image.id} className="flex items-center justify-center">
+              {getProductsByColor?.map((image, index) => (
+                <Tab.Panel key={index} className="flex items-center justify-center">
                   <img
-                    src={image?.urlImage}
+                    src={image}
                     alt="thermo"
                     className="size-5/6 bg-transparent object-contain object-center sm:rounded-lg"
                   />
@@ -76,59 +104,70 @@ export default function ProductDetails() {
               <p className="space-y-6 text-base text-white/70">{product?.description}</p>
             </div>
 
-            <form className="my-6">
+            <form className="lg:my-6">
               {/* Colors */}
               <div>
                 <h3 className="text-sm text-white/80">Color</h3>
 
                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
                   <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-                  <span className="flex items-center space-x-3">
-                    {product?.variants?.map((image) => (
-                      <RadioGroup.Option
-                        key={image?.id}
-                        value={image?.color}
-                        className={({ active, checked }) =>
-                          classNames(
-                            image?.color,
-                            active && checked ? 'ring ring-offset-1' : '',
-                            !active && checked ? 'ring-2' : '',
-                            'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
-                          )
-                        }
-                      >
-                        <RadioGroup.Label as="span" className="sr-only">
-                          {image?.color}
-                        </RadioGroup.Label>
-                        <span
-                          aria-hidden="true"
-                          className={classNames(
-                            // color.bgColor,
-                            'h-8 w-8 rounded-full border border-black border-opacity-10'
-                          )}
-                        />
-                      </RadioGroup.Option>
-                    ))}
+                  <span className="flex flex-wrap items-center gap-3">
+                    {product?.variants?.map((image) => {
+                      return (
+                        <RadioGroup.Option
+                          key={image?.id}
+                          value={image?.color}
+                          style={{ background: image?.colorHex }}
+                          className={({ active, checked }) =>
+                            classNames(
+                              active && checked ? 'ring-2 ring-primary' : '',
+                              !active && checked ? 'ring-2 ring-primary' : '',
+                              'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 outline-none focus:outline-none'
+                            )
+                          }
+                        >
+                          <RadioGroup.Label as="span" className="sr-only">
+                            {image?.color}
+                          </RadioGroup.Label>
+                          <Tooltip content={image?.color} className="bg-[#0f0e0e] text-white/50">
+                            <span
+                              style={{ background: image?.colorHex }}
+                              aria-hidden="true"
+                              className={classNames('h-8 w-8 rounded-full border-2 border-black/20 border-opacity-50')}
+                            />
+                          </Tooltip>
+                        </RadioGroup.Option>
+                      );
+                    })}
                   </span>
                 </RadioGroup>
               </div>
 
-              <div className="my-6 flex w-4/6 gap-2">
+              <div className="mt-6 flex w-full flex-col gap-5 lg:my-6 lg:w-4/6 lg:flex-row lg:gap-2">
                 <Button
                   className="text-gray flex w-full gap-1 border-1 border-white/20 bg-[#1A1A1A]"
                   onPress={() => {
+                    storageCartItem({
+                      ...product,
+                      variants: Array(product.variants?.find((ele) => ele.color === selectedColor)),
+                    } as CartProduct);
                     // storageCartItem(product as CartProduct);
-                    // const isSmallScreen = size === 'sm' || size === 'md' ? true : false;
-                    // setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
+                    const isSmallScreen = size === 'sm' || size === 'md' ? true : false;
+                    setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
                   }}
                 >
                   <ShoppingCartIcon className="size-[20px] text-white/40" />
                   <span className="text-xs text-white/40">Add to cart</span>
                 </Button>
                 <Link
-                  className="flex w-4/6 items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black"
+                  className="flex w-full items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black lg:w-4/6"
                   href="/cart"
-                  // onPress={() => storageCartItem(product as CartProduct)}
+                  onPress={() => {
+                    storageCartItem({
+                      ...product,
+                      variants: Array(product.variants?.find((ele) => ele.color === selectedColor)),
+                    } as CartProduct);
+                  }}
                 >
                   Buy
                 </Link>
@@ -137,6 +176,7 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
+      <DrawerCart setShowCurrentCart={setShowCurrentCart} showCurrentCart={showCurrentCart} />
     </div>
   );
 }

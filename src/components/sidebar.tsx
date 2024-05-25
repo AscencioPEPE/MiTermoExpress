@@ -19,6 +19,7 @@ export const Sidebar = ({ filters, setFilters }: ISidebar) => {
         <aside className="md:fixed md:mx-6 md:h-sidebar">
           <Accordion
             selectionMode="multiple"
+            defaultExpandedKeys={'all'}
             isCompact
             className="flex h-full flex-col items-center justify-start rounded-xl bg-[#1A1A1A]  shadow-xl"
           >

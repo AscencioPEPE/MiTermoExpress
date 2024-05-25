@@ -6,10 +6,10 @@ import { GuestSchema, builderGuestSchema } from '../../lib/schemas/schema-auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '@/src/types/user';
 import { LayoutAuth } from '../../components/layout-auth';
+import { useRegisterGuestQuery } from '../../services/useAuth';
 
 const AuthGuest = () => {
-  const [_, setLocation] = useLocation();
-  const { storageCurrentUser } = useUserStore();
+  const { mutateAsync: registerGuest, isPending: isLoading } = useRegisterGuestQuery();
 
   const {
     register,
@@ -22,8 +22,14 @@ const AuthGuest = () => {
 
     if (hasErrors) return;
 
-    storageCurrentUser({ ...data, isGuest: true } as User);
-    setLocation('/cart', { replace: true });
+    registerGuest({
+      ...data,
+      password: '',
+      order: {
+        status: '',
+        products: [],
+      },
+    });
   };
 
   return (
@@ -69,7 +75,7 @@ const AuthGuest = () => {
             {...register('address')}
             isInvalid={!!errors.address}
           />
-          <Button color="primary" type="submit">
+          <Button color="primary" type="submit" isLoading={isLoading}>
             Save
           </Button>
         </div>

@@ -39,6 +39,16 @@ export const registerCustomer = async (credentials: RegisterCustomerSchema) => {
   return data;
 };
 
+export const registerGuest = async (credentials: RegisterCustomerSchema) => {
+  const { data } = await apiRequest({
+    url: '/auth/register/customer?createAccount=false',
+    method: 'POST',
+    data: credentials,
+  });
+
+  return data;
+};
+
 export const registerAdmin = async (credentials: RegisterAdminSchema) => {
   const { data } = await apiRequest({
     url: '/auth/register/admin',

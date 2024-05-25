@@ -20,10 +20,11 @@ export type Product = {
 };
 
 export type Variant = {
-  id: 5;
+  id: number;
   color: string;
   urlImage: string;
   urlImageBack: string;
+  colorHex: string;
 };
 
 export type CartProduct = Product & { quantityToBuy: number };

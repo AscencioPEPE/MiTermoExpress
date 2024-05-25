@@ -9,7 +9,7 @@ type CartProps = {
   // getLastProductAdded: () => void;
   storageCartItem: (cartItem: CartProduct) => void;
   removeCartItem: (itemName: CartProduct['name']) => void;
-  updateCartItem: (itemName: CartProduct['name'], newQuantity: CartProduct['quantity']) => void;
+  updateCartItem: (itemName: CartProduct['name'], newQuantity: CartProduct) => void;
 };
 
 const useCartStore = create(
@@ -37,13 +37,13 @@ const useCartStore = create(
           currentCartItems: state.currentCartItems.filter((item) => item.name !== itemName),
         }));
       },
-      updateCartItem: (itemName, newQuantity) => {
+      updateCartItem: (itemName, newData) => {
         return set((state) => {
           return {
-            lastItemAdded: { ...state.lastItemAdded, quantityToBuy: newQuantity } as CartProduct,
+            lastItemAdded: { ...state.lastItemAdded, quantityToBuy: newData.quantityToBuy } as CartProduct,
             currentCartItems: state.currentCartItems.map((item) => {
               if (item.name === itemName) {
-                return { ...item, quantityToBuy: newQuantity };
+                return newData;
               }
               return item;
             }),

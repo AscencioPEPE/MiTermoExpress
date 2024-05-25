@@ -16,8 +16,7 @@ export const Home = () => {
         <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
           <div className="aspect-h-1 aspect-w-2 sm:aspect-h-1 sm:aspect-w-1 group overflow-hidden rounded-lg sm:relative sm:row-span-2">
             <Image
-              // src="https://s3bucketartetermos.com.s3.amazonaws.com/Termo+Vacuum+30+onzas+azul+cielo+back.png"
-              src="https://s3bucketartetermos.com.s3.amazonaws.com/Termo+Vacuum+30+onzas+azul+cielo.png"
+              src="https://fotos.productos-api.com/Termo+Vacuum+30+onzas+azul+cielo.png"
               alt="Two models wearing women's black cotton  tee and off-white cotton  tee."
               classNames={{
                 img: 'opacity-100 z-0 group-hover:opacity-75 h-full object-cover object-center',
@@ -49,7 +48,7 @@ export const Home = () => {
           </div>
           <div className="aspect-h-1 aspect-w-2 sm:aspect-none group overflow-hidden rounded-lg sm:relative sm:h-full">
             <Image
-              src="https://s3bucketartetermos.com.s3.amazonaws.com/Yeti+30+onzas+rosa.png"
+              src="https://fotos.productos-api.com/Yeti+30+onzas+rosa.png"
               alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters."
               classNames={{
                 wrapper: 'static',
@@ -76,8 +75,7 @@ export const Home = () => {
           </div>
           <div className="aspect-h-1 aspect-w-2 sm:aspect-none group overflow-hidden rounded-lg sm:relative sm:h-full">
             <Image
-              src="https://s3bucketartetermos.com.s3.amazonaws.com/Termo+Vacuum+30+onzas+amarillo+back.png"
-              // src="https://yeti-web.imgix.net/490d23de6ee7730b/W-240001_ValentinesDay_Site_Studio_Shakethingsupset_Primary_B_2400x2400.png?bg=0fff&auto=format&w=500&q=68&h=500&fit=fill&hattr=500px&wattr=500px"
+              src="https://fotos.productos-api.com/Termo+Vacuum+30+onzas+amarillo.png"
               alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk."
               classNames={{
                 wrapper: 'static',

@@ -6,7 +6,13 @@ export const builderGuestSchema = z.object({
   email: z.string().email(),
   phone: z.string().min(8),
   address: z.string().min(1),
-  // password: z.string().min(6),
+  password: z.string().optional(),
+  order: z
+    .object({
+      status: z.enum(['Pending', 'Processing', 'Shipped', 'Delivered', '']),
+      products: z.array(OrderProductSchema),
+    })
+    .optional(),
 });
 
 export const builderLoginSchema = z.object({
@@ -38,5 +44,7 @@ export type GuestSchema = z.infer<typeof builderGuestSchema>;
 export type LoginSchema = z.infer<typeof builderLoginSchema>;
 
 export type RegisterCustomerSchema = z.infer<typeof builderRegisterCustomerSchema>;
+
+export type RegisterGuestSchema = z.infer<typeof builderGuestSchema>;
 
 export type RegisterAdminSchema = z.infer<typeof builderRegisterAdminSchema>;
