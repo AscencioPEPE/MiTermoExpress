@@ -2,28 +2,30 @@ import { Button, Divider, Image, Tooltip } from '@nextui-org/react';
 import useCartStore from '../../zustand/cart';
 import { CartProduct } from '@/src/types/products';
 import { ModalConfirmation } from '../../components/modal-confirmation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useUserStore from '../../zustand/user';
 import { formattedFixed, formattedPrice } from '../../lib/formater';
 import { useLocation } from 'wouter';
 import { usePaymentQuery } from '../../services/usePayment';
 import { Payment } from '@/src/types/payment';
-import Drawer from '../../components/drawer-payment';
 import { classNames } from '../../lib/classes';
 import { ModifyProduct } from '../../components/modify-product';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { ModalSimple } from '../../components/modal-simple';
+import useDimensions from '../../hooks/useDimensions';
 
 const SHIPPING = 0;
 
 export const Cart = () => {
   const { currentCartItems, removeCartItem, updateCartItem } = useCartStore();
-  console.log('currentCartItems: ', currentCartItems);
 
   const { currentUser } = useUserStore();
   const [_, setLocation] = useLocation();
   const { mutateAsync: payment, isPending } = usePaymentQuery();
+  const size = useDimensions();
 
-  const [openDrawer, setOpenDrawer] = useState(true);
+  const [openDrawer, setOpenDrawer] = useState(size == 'sm' || size == 'md');
+
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState<CartProduct | undefined>(undefined);
   const [productToModify, setProductToModify] = useState<CartProduct | undefined>(undefined);
@@ -49,7 +51,7 @@ export const Cart = () => {
       capacity: product.capacity,
       quantity: product.quantityToBuy,
     }));
-    console.log(items, 'items');
+
     /**
      * Get the customer and mapping the data for form post
      */
@@ -82,6 +84,10 @@ export const Cart = () => {
     // Devuelve el total calculado
     return total;
   };
+
+  useEffect(() => {
+    setOpenDrawer(size == 'sm' || size == 'md');
+  }, [size]);
 
   return (
     <>
@@ -177,7 +183,13 @@ export const Cart = () => {
         <Button className="my-5 w-full bg-[#E0F6BF] font-bold md:hidden" onPress={() => setOpenDrawer(true)}>
           View Order
         </Button>
-        <Drawer open={openDrawer} setOpen={setOpenDrawer}>
+        <ModalSimple
+          isOpen={openDrawer}
+          placement="bottom"
+          size="5xl"
+          className="bg-[#1A1A1A] pb-5"
+          onClose={() => setOpenDrawer(false)}
+        >
           <div className="flex flex-col items-start justify-center  gap-y-2 ">
             <div className="flex w-1/2 items-center justify-between">
               <h3 className="text-xl font-bold">Total</h3>
@@ -204,7 +216,7 @@ export const Cart = () => {
           >
             Go to buy!
           </Button>
-        </Drawer>
+        </ModalSimple>
       </div>
     </>
   );

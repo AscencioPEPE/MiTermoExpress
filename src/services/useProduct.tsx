@@ -18,7 +18,7 @@ export const useListProductQuery = ({ limit = 20, page = 1, filters = [] }) => {
  * Get only one product by name
  */
 export const useProductQuery = (productName: string) =>
-  useQuery<Product>({ queryKey: ['product'], queryFn: () => getProduct(productName) });
+  useQuery<Product>({ queryKey: ['product', productName], queryFn: () => getProduct(productName) });
 /**
  * Create a new Product
  */

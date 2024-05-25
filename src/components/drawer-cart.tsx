@@ -1,5 +1,5 @@
 import Drawer from 'react-modern-drawer';
-import { Image, Button, Divider } from '@nextui-org/react';
+import { Image, Button, Divider, Link } from '@nextui-org/react';
 import useCartStore from '../zustand/cart';
 import { SetStateAction } from 'react';
 import { ModalSimple } from './modal-simple';
@@ -28,89 +28,43 @@ export const DrawerCart = ({ setShowCurrentCart, showCurrentCart }: DrawerCartPr
               <Image src="/icons/congrats.png" classNames={{ img: 'w-[80px] object-contain object-center' }} />
               <h3 className="w-full text-center font-bold text-white/80">Has añadido un producto a tu inventario</h3>
             </div>
-            <div className="my-8 flex flex-col items-center gap-y-2">
-              <span className="font-bold">{lastItemAdded?.name}</span>
+            <div className="my-8 flex flex-col items-start gap-y-4">
+              <div className="flex w-full justify-center">
+                <Image className="size-[140px] object-contain" src={lastItemAdded?.variants?.[0]?.urlImage} />
+              </div>
+              <h4 className="w-full text-center text-lg font-bold">{lastItemAdded?.name}</h4>
               <span className="text-white/60">{lastItemAdded?.description}</span>
-            </div>
-            <div className="my-8 flex items-center  justify-between rounded-lg border-1 border-softWhite/40  bg-[#2f2f2f]">
-              <Button
-                className="rounded-lg rounded-e-none bg-[#262626] text-softWhite/80"
-                isDisabled={lastItemAdded?.quantityToBuy == 1 ? true : false}
-                onPress={() => updateCartItem(lastItemAdded?.name ?? '', (lastItemAdded?.quantityToBuy ?? 0) - 1)}
-              >
-                -
-              </Button>
-              <span className="px-5 text-softWhite/70 ">{lastItemAdded?.quantityToBuy}</span>
-              <Button
-                className="rounded-lg rounded-s-none bg-[#262626] text-softWhite/80"
-                onPress={() => updateCartItem(lastItemAdded?.name ?? '', (lastItemAdded?.quantityToBuy ?? 0) + 1)}
-              >
-                +
-              </Button>
+
+              <span className="text-white/60">Color: {lastItemAdded?.variants?.[0]?.color}</span>
             </div>
           </div>
-          <div className="flex flex-col gap-y-4">
-            <Divider className="bg-white/40" />
-            <div className="flex w-4/6 flex-wrap justify-between">
-              {(lastItemAdded?.quantityToBuy ?? 0) > 1 && (
-                <>
-                  <span>Precio unitario</span>
-                  <span>${lastItemAdded?.price}</span>
-                </>
-              )}
-              <span>Total</span>
-              <span>${Math.abs((lastItemAdded?.price ?? 0) * (lastItemAdded?.quantityToBuy ?? 0))}</span>
-            </div>
-          </div>
+          <Link href="/cart" className="flex justify-center rounded-lg bg-blue-500 py-1.5 font-bold text-white/60">
+            Ver el carrito
+          </Link>
         </div>
       </Drawer>
       <ModalSimple
         isOpen={showCurrentCart.isActive && showCurrentCart.isMobile}
         placement="bottom"
         size="5xl"
-        className="bg-[#1A1A1A]"
+        className="bg-[#1A1A1A] pb-5"
         onClose={() => setShowCurrentCart({ isActive: false, isMobile: false })}
       >
         <div className="flex h-4/6 flex-col justify-between px-3">
           <div className="flex flex-col">
-            <div className="w-ful my-8 flex  flex-col items-center justify-center gap-y-5">
-              <Image src="/icons/congrats.png" classNames={{ img: 'w-[80px] object-contain object-center' }} />
+            <div className="w-ful my-5 flex  flex-col items-center justify-center gap-y-5">
               <h3 className="w-full text-center font-bold text-white/80">Has añadido un producto a tu inventario</h3>
             </div>
             <div className="my-8 flex flex-col items-center gap-y-2">
+              <Image className="size-[100px] object-contain" src={lastItemAdded?.variants?.[0]?.urlImage} />
               <span className="font-bold">{lastItemAdded?.name}</span>
               <span className="text-white/60">{lastItemAdded?.description}</span>
-            </div>
-            <div className="my-8 flex items-center  justify-between rounded-lg border-1 border-softWhite/40  bg-[#2f2f2f]">
-              <Button
-                className="rounded-lg rounded-e-none bg-[#262626] text-softWhite/80"
-                isDisabled={lastItemAdded?.quantityToBuy == 1 ? true : false}
-                onPress={() => updateCartItem(lastItemAdded?.name ?? '', (lastItemAdded?.quantityToBuy ?? 0) - 1)}
-              >
-                -
-              </Button>
-              <span className="px-5 text-softWhite/70 ">{lastItemAdded?.quantityToBuy}</span>
-              <Button
-                className="rounded-lg rounded-s-none bg-[#262626] text-softWhite/80"
-                onPress={() => updateCartItem(lastItemAdded?.name ?? '', (lastItemAdded?.quantityToBuy ?? 0) + 1)}
-              >
-                +
-              </Button>
+              <span className="text-white/60">Color: {lastItemAdded?.variants?.[0]?.color}</span>
             </div>
           </div>
-          <div className="flex flex-col gap-y-4">
-            <Divider className="bg-white/40" />
-            <div className="flex w-4/6 flex-wrap justify-between">
-              {(lastItemAdded?.quantityToBuy ?? 0) > 1 && (
-                <>
-                  <span>Precio unitario</span>
-                  <span>${lastItemAdded?.price}</span>
-                </>
-              )}
-              <span>Total</span>
-              <span>${Math.abs((lastItemAdded?.price ?? 0) * (lastItemAdded?.quantityToBuy ?? 0))}</span>
-            </div>
-          </div>
+          <Link href="/cart" className="flex justify-center rounded-lg bg-blue-500 py-1.5 font-bold text-white/60">
+            Ver el carrito
+          </Link>
         </div>
       </ModalSimple>
     </>

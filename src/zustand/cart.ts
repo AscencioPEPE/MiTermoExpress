@@ -26,8 +26,18 @@ const useCartStore = create(
 
           const addQuantityToBuy: CartProduct = { ...cartItem, quantityToBuy: DEFAULT_QUANTITY };
 
+          const products = [...state.currentCartItems, addQuantityToBuy];
+
+          const uniqueItems = products.reduce((acc: CartProduct[], current: CartProduct) => {
+            const isDuplicate = acc.some((item) => item.name === current.name);
+            if (!isDuplicate) {
+              acc.push(current);
+            }
+            return acc;
+          }, []);
+
           return {
-            currentCartItems: [...state.currentCartItems, addQuantityToBuy],
+            currentCartItems: uniqueItems,
             lastItemAdded: addQuantityToBuy,
           };
         });

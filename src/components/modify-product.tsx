@@ -3,7 +3,7 @@ import { CartProduct } from '../types/products';
 import { ModalSimple } from './modal-simple';
 import { Image, Divider, Select, SelectItem, Button } from '@nextui-org/react';
 import { formattedPrice } from '../lib/formater';
-import { SetStateAction } from 'react';
+import { SetStateAction, useEffect } from 'react';
 import useDimensions from '../hooks/useDimensions';
 import { useProductQuery } from '../services/useProduct';
 import useCartStore from '../zustand/cart';

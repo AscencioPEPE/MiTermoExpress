@@ -45,12 +45,14 @@ export const useRegisterCustomerQuery = () => {
 };
 
 export const useRegisterGuestQuery = () => {
+  const { currentUser, storageCurrentUser } = useUserStore();
   const [_, setLocation] = useLocation();
 
   return useMutation({
     mutationKey: ['auth'],
     mutationFn: (credentials: RegisterGuestSchema) => registerCustomer(credentials),
     onSuccess: (data: GuestRegisterResponseApi) => {
+      storageCurrentUser({ ...data, isGuest: true });
       setLocation('/cart');
     },
     onError: () => toast('An error was ocurred! Please try again'),
