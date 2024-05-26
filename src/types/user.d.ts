@@ -8,4 +8,5 @@ export type User = {
   orders?: string[];
   token?: string;
   role?: 'ROLE_SUPER_ADMIN' | 'ROLE_ADMIN' | 'ROLE_GUEST';
+  username: string;
 };

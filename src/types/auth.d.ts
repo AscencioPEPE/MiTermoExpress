@@ -6,6 +6,11 @@ export type LoginResponseApi = {
   accessToken: string;
   tokenType: string;
   role: User['role'];
+  address: string;
+  email: string;
+  name: string;
+  phone: string;
+  username: string;
 };
 
 export type CustomerRegisterResponseApi = {

@@ -35,7 +35,7 @@ export const Cart = () => {
     /**
      * Check if the customer has account
      */
-    const isUserLogged = !!currentUser.address;
+    const isUserLogged = !!currentUser.address && !!currentUser.email;
 
     if (!isUserLogged) {
       setLocation('/auth/guest');

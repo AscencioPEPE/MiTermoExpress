@@ -17,7 +17,9 @@ interface ModifyProductProps {
 
 export const ModifyProduct = ({ product, open, setOpen }: ModifyProductProps) => {
   const size = useDimensions();
+
   const { currentCartItems, updateCartItem } = useCartStore();
+
   const { data, isLoading } = useProductQuery(product?.name);
 
   const colors = data?.variants?.map((variant) => ({ value: variant?.color, label: variant?.color }));
@@ -35,9 +37,10 @@ export const ModifyProduct = ({ product, open, setOpen }: ModifyProductProps) =>
     if (kindOf === 'color') {
       const getVariant = data?.variants.find((variant) => variant.color === dataUpdated);
 
-      updateCartItem(product.name, { ...product, variants: [getVariant] });
+      updateCartItem(product.name, { ...currentSelection, variants: [getVariant] });
     }
-    if (kindOf === 'quantity') updateCartItem(product.name, { ...product, quantityToBuy: Number(dataUpdated) });
+    if (kindOf === 'quantity')
+      updateCartItem(product.name, { ...currentSelection, quantityToBuy: Number(dataUpdated) });
   };
 
   return (

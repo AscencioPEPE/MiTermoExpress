@@ -21,6 +21,7 @@ const useUserStore = create(
         password: undefined,
         token: '',
         role: undefined,
+        username: '',
       },
       storageCurrentUser: (currentUser) => {
         return set((state) => ({
@@ -33,6 +34,7 @@ const useUserStore = create(
             password: currentUser.password,
             token: currentUser.token,
             role: currentUser.role,
+            username: currentUser.username,
           },
         }));
       },
@@ -47,6 +49,7 @@ const useUserStore = create(
             password: undefined,
             token: '',
             role: undefined,
+            username: '',
           },
         }));
       },

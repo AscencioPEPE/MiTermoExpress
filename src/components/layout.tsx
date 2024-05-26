@@ -36,7 +36,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { currentUser } = useUserStore();
+  const { currentUser, removeCurrentUser } = useUserStore();
   const { currentCartItems } = useCartStore();
 
   return (
@@ -110,13 +110,22 @@ export default function Layout({ children }: LayoutProps) {
                           <span>{currentUser.name}</span>
                         </div>
                       )}
+                      {/*
+                      USER AUNTHENTICATED
+                      */}
                       {currentUser?.token ? (
                         <Menu as="div" className="relative ml-3">
                           <div>
-                            <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <Menu.Button className="relative flex  max-w-xs items-center p-0 text-sm outline-none hover:border-0 focus:outline-none">
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
-                              <Avatar name={currentUser?.name ?? 'User'} />
+                              <Avatar
+                                name={currentUser?.name || currentUser?.username || 'User'}
+                                classNames={{
+                                  base: 'bg-primary',
+                                  icon: 'text-black/80',
+                                }}
+                              />
                             </Menu.Button>
                           </div>
                           <Transition
@@ -128,16 +137,19 @@ export default function Layout({ children }: LayoutProps) {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="z-1 absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
+                            <Menu.Items className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-[#1A1A1A] py-1 shadow-lg ring-1 ring-white/15 focus:outline-none">
                               {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
                                     <Link
                                       href={item.href}
                                       className={classNames(
-                                        active ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700'
+                                        active ? 'bg-[#282828] ' : '',
+                                        'block px-4 py-2 text-sm text-white/80 hover:text-white/70'
                                       )}
+                                      onClick={() => {
+                                        if (item.name === 'Logout') removeCurrentUser();
+                                      }}
                                     >
                                       {item.name}
                                     </Link>
@@ -208,7 +220,10 @@ export default function Layout({ children }: LayoutProps) {
                     {currentUser.token ? (
                       <>
                         <div className="shrink-0">
-                          <Avatar className="size-10 rounded-full" src={currentUser.name} />
+                          <Avatar
+                            className="size-10 rounded-full"
+                            src={currentUser?.name || currentUser?.username || 'USER'}
+                          />
                         </div>
                         <div className="ml-3">
                           <div className="text-base font-medium leading-none text-white">{user.name}</div>
@@ -244,17 +259,38 @@ export default function Layout({ children }: LayoutProps) {
                       </Badge>
                     </div>
                   </div>
+
                   <div className="mt-3 space-y-1 px-2">
-                    {userNavigation.map((item) => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-[#1a1a1aa5] hover:text-white"
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
+                    {currentUser?.token ? (
+                      <>
+                        {userNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            as="a"
+                            href={item.href}
+                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-[#1a1a1aa5] hover:text-white"
+                            onClick={() => {
+                              if (item.name === 'Logout') removeCurrentUser();
+                            }}
+                          >
+                            {item.name}
+                          </Disclosure.Button>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {guestNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            as="a"
+                            href={item.href}
+                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-[#1a1a1aa5] hover:text-white"
+                          >
+                            {item.name}
+                          </Disclosure.Button>
+                        ))}
+                      </>
+                    )}
                   </div>
                 </div>
               </Disclosure.Panel>

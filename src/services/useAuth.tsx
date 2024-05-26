@@ -24,7 +24,8 @@ export const useLoginQuery = () => {
     mutationKey: ['auth'],
     mutationFn: (credentials: LoginSchema) => login(credentials),
     onSuccess: (data: LoginResponseApi) => {
-      storageCurrentUser({ ...currentUser, token: data.accessToken, role: data.role });
+      console.log('data: ', data);
+      storageCurrentUser({ ...data, isGuest: false, token: data.accessToken });
       setLocation('/');
     },
     onError: () => toast('User or Password is incorrect'),
@@ -52,7 +53,7 @@ export const useRegisterGuestQuery = () => {
     mutationKey: ['auth'],
     mutationFn: (credentials: RegisterGuestSchema) => registerCustomer(credentials),
     onSuccess: (data: GuestRegisterResponseApi) => {
-      storageCurrentUser({ ...data, isGuest: true });
+      storageCurrentUser({ ...data, isGuest: true, username: data.email });
       setLocation('/cart');
     },
     onError: () => toast('An error was ocurred! Please try again'),

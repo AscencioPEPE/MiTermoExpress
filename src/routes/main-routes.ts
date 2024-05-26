@@ -1,6 +1,7 @@
 import { RouteProps } from 'wouter';
 import { lazy } from 'react';
 import { User } from '@/src/types/user';
+
 const Home = lazy(() => import('../home'));
 const Products = lazy(() => import('../pages/products'));
 const ProductDetails = lazy(() => import('../pages/products/product-details'));
@@ -11,11 +12,20 @@ const AuthRegisterCustomer = lazy(() => import('../pages/auth/auth-register'));
 const AuthRegisterAdmin = lazy(() => import('../pages/auth/auth-register-admin'));
 const Failure = lazy(() => import('../pages/transaction/Failure'));
 const Success = lazy(() => import('../pages/transaction/Success'));
+const Admin = lazy(() => import('../pages/admin'));
+const OrdersAdmin = lazy(() => import('../pages/admin/orders'));
+const Orders = lazy(() => import('../pages/orders'));
 
-interface MainRoutesProps extends RouteProps {
-  isProtected: boolean;
-  role?: User['role'][];
-}
+type MainRoutesProps = RouteProps &
+  (
+    | {
+        isProtected: false;
+      }
+    | {
+        isProtected: true;
+        role: User['role'][];
+      }
+  );
 
 export const MainRoutes: MainRoutesProps[] = [
   {
@@ -70,9 +80,20 @@ export const MainRoutes: MainRoutesProps[] = [
     isProtected: false,
   },
   {
-    path: '/foo',
-    component: Products,
+    path: '/allOrders',
+    component: OrdersAdmin,
     isProtected: true,
     role: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'],
+  },
+  {
+    path: '/orders',
+    component: Orders,
+    isProtected: false,
+  },
+  {
+    path: '/admins',
+    component: Admin,
+    isProtected: true,
+    role: ['ROLE_SUPER_ADMIN'],
   },
 ];
