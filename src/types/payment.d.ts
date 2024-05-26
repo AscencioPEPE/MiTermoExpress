@@ -3,7 +3,7 @@ import { User } from './user';
 
 export type Payment = {
   items: ProductItems[];
-  customer: Omit<User, 'password' | 'isGuest' | 'orders' | 'token'>;
+  customer: Omit<User, 'password' | 'isGuest' | 'orders' | 'token' | 'username'>;
 };
 
 export type ProductItems = {
