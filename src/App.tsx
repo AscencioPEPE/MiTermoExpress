@@ -11,17 +11,25 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notfound/not-found';
 import { Suspense } from 'react';
+import useUserStore from './zustand/user';
 
 function App() {
+  const { currentUser } = useUserStore();
+
   return (
     <QueryClientProvider client={queryClient}>
       <NextUIProvider>
         <Layout>
           <Suspense>
             <Switch>
-              {MainRoutes.map((route, index) => (
-                <Route {...route} key={index} />
-              ))}
+              {MainRoutes.map((route, index) => {
+                if (route.isProtected && route.role.includes(currentUser.role)) {
+                  return <Route {...route} key={index} />;
+                }
+                if (!route.isProtected) {
+                  return <Route {...route} key={index} />;
+                }
+              })}
               <Route>
                 <NotFound />
               </Route>

@@ -24,7 +24,7 @@ export const useLoginQuery = () => {
     mutationKey: ['auth'],
     mutationFn: (credentials: LoginSchema) => login(credentials),
     onSuccess: (data: LoginResponseApi) => {
-      storageCurrentUser({ ...currentUser, token: data.accessToken });
+      storageCurrentUser({ ...currentUser, token: data.accessToken, role: data.role });
       setLocation('/');
     },
     onError: () => toast('User or Password is incorrect'),

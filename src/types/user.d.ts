@@ -7,4 +7,5 @@ export type User = {
   isGuest?: boolean;
   orders?: string[];
   token?: string;
+  role?: 'ROLE_SUPER_ADMIN' | 'ROLE_ADMIN' | 'ROLE_GUEST';
 };

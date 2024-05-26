@@ -20,6 +20,7 @@ const useUserStore = create(
         isGuest: undefined,
         password: undefined,
         token: '',
+        role: undefined,
       },
       storageCurrentUser: (currentUser) => {
         return set((state) => ({
@@ -31,6 +32,7 @@ const useUserStore = create(
             isGuest: currentUser.isGuest,
             password: currentUser.password,
             token: currentUser.token,
+            role: currentUser.role,
           },
         }));
       },
@@ -44,6 +46,7 @@ const useUserStore = create(
             isGuest: undefined,
             password: undefined,
             token: '',
+            role: undefined,
           },
         }));
       },

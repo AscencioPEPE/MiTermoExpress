@@ -1,9 +1,11 @@
 import { Customer } from './customer';
 import { Admin } from './admin';
+import { User } from './user';
 
 export type LoginResponseApi = {
   accessToken: string;
   tokenType: string;
+  role: User['role'];
 };
 
 export type CustomerRegisterResponseApi = {
