@@ -1,6 +1,6 @@
 import { Button, Divider, Image, Tooltip } from '@nextui-org/react';
 import useCartStore from '../../zustand/cart';
-import { CartProduct } from '@/src/types/products';
+import { CartProduct, Variant } from '@/src/types/products';
 import { ModalConfirmation } from '../../components/modal-confirmation';
 import { useEffect, useState } from 'react';
 import useUserStore from '../../zustand/user';
@@ -47,7 +47,7 @@ export const Cart = () => {
     const items: Payment['items'] = currentCartItems.map((product) => ({
       name: product.name,
       price: Number(formattedFixed(product.price)),
-      variants: product.variants[0],
+      variant: product.variants[0],
       capacity: product.capacity,
       quantity: product.quantityToBuy,
     }));

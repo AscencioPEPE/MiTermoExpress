@@ -9,7 +9,7 @@ export type Payment = {
 export type ProductItems = {
   name: string;
   price: number;
-  variants: Variant;
+  variants?: Variant;
   capacity: number;
   quantity: number;
 };
