@@ -17,18 +17,20 @@ const user = {
 const navigation = [
   { name: 'Products', href: '/products', current: true },
   { name: 'Your cart', href: '/cart', current: false },
-  // { name: 'Offers', href: '#', current: false },
+  { name: 'My orders', href: '/orders', current: false },
 ];
 const userNavigation = [
   { name: 'Logout', href: '#' },
   { name: 'Products', href: '/products' },
   { name: 'Your cart', href: '/cart' },
+  { name: 'My orders', href: '/orders' },
 ];
 
 const guestNavigation = [
   { name: 'Login', href: '/auth/login' },
   { name: 'Products', href: '/products' },
   { name: 'Your cart', href: '/cart' },
+  { name: 'My orders', href: '/orders' },
 ];
 
 interface LayoutProps {

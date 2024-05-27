@@ -70,7 +70,7 @@ export const MainRoutes: MainRoutesProps[] = [
     isProtected: false,
   },
   {
-    path: '/success?session_id=:sessionId',
+    path: '/success',
     component: Success,
     isProtected: false,
   },
