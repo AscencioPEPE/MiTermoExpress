@@ -15,3 +15,13 @@ export const getBgColor = (color: string) => {
 
   return colors[color];
 };
+
+export const statusColor = (status: string) => {
+  const colors: { [key: string]: string } = {
+    PENDING: 'text-warning',
+    PAID: 'text-[#1A1A]',
+    FAIL: 'text-danger',
+  };
+
+  return colors[status];
+};

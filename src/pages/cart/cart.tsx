@@ -46,9 +46,10 @@ export const Cart = () => {
      */
     const items: Payment['items'] = currentCartItems.map((product) => ({
       name: product.name,
-      price: Number(formattedFixed(product.price)),
+      description: product.description,
       variant: product.variants[0],
       capacity: product.capacity,
+      price: Number(formattedFixed(product.price)),
       quantity: product.quantityToBuy,
     }));
 

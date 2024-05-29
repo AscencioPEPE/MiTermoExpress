@@ -11,5 +11,6 @@ export type ProductItems = {
   price: number;
   variants?: Variant;
   capacity: number;
+  description: string;
   quantity: number;
 };

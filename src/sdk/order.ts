@@ -1,7 +1,7 @@
 import { apiRequest } from '../lib/connection';
 
 export const listOrdersCustomer = async (email: string) => {
-  const { data } = await apiRequest({ url: `/customer/${email}`, method: 'GET' });
+  const { data } = await apiRequest({ url: `/customer?email=${encodeURIComponent(email)}`, method: 'GET' });
 
   return data;
 };

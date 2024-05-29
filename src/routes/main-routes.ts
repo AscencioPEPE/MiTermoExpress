@@ -15,6 +15,7 @@ const Success = lazy(() => import('../pages/transaction/Success'));
 const Admin = lazy(() => import('../pages/admin'));
 const OrdersAdmin = lazy(() => import('../pages/admin/orders'));
 const Orders = lazy(() => import('../pages/orders'));
+const AdminProducts = lazy(() => import('../pages/admin/products'));
 
 type MainRoutesProps = RouteProps &
   (
@@ -91,9 +92,15 @@ export const MainRoutes: MainRoutesProps[] = [
     isProtected: false,
   },
   {
-    path: '/admins',
+    path: '/admin',
     component: Admin,
     isProtected: true,
     role: ['ROLE_SUPER_ADMIN'],
+  },
+  {
+    path: '/admin/products',
+    component: AdminProducts,
+    isProtected: true,
+    role: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'],
   },
 ];
