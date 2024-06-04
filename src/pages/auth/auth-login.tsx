@@ -28,6 +28,7 @@ const AuthLogin = () => {
   return (
     <LayoutAuth
       backHref="/"
+      coverImg="https://fotos.productos-api.com/Termos+Vacuum+30+onzas.png"
       title={
         <>
           <span className="text-primary">Login </span>to continue

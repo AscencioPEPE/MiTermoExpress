@@ -36,6 +36,7 @@ const AuthRegisterCustomer = () => {
     <LayoutAuth
       backHref="/"
       reverseContent
+      coverImg="https://fotos.productos-api.com/Termos+Yeti+30+onzas.png"
       title={
         <>
           Please fill the form to <span className="text-primary">Register</span> to us!

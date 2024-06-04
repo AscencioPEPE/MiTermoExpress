@@ -1,6 +1,6 @@
-import { Button, Divider, Image, Tooltip } from '@nextui-org/react';
+import { Button, Divider, Image, Select, SelectItem, Tooltip } from '@nextui-org/react';
 import useCartStore from '../../zustand/cart';
-import { CartProduct, Variant } from '@/src/types/products';
+import { CartProduct } from '@/src/types/products';
 import { ModalConfirmation } from '../../components/modal-confirmation';
 import { useEffect, useState } from 'react';
 import useUserStore from '../../zustand/user';
@@ -9,10 +9,10 @@ import { useLocation } from 'wouter';
 import { usePaymentQuery } from '../../services/usePayment';
 import { Payment } from '@/src/types/payment';
 import { classNames } from '../../lib/classes';
-import { ModifyProduct } from '../../components/modify-product';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { ModalSimple } from '../../components/modal-simple';
 import useDimensions from '../../hooks/useDimensions';
+import { quantities } from '../../lib/constants';
 
 const SHIPPING = 0;
 
@@ -47,7 +47,6 @@ export const Cart = () => {
     const items: Payment['items'] = currentCartItems.map((product) => ({
       name: product.name,
       description: product.description,
-      variant: product.variants[0],
       capacity: product.capacity,
       price: Number(formattedFixed(product.price)),
       quantity: product.quantityToBuy,
@@ -97,13 +96,12 @@ export const Cart = () => {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onOk={() => {
-          removeCartItem(modalData?.name ?? '');
+          removeCartItem(modalData?.sku ?? '');
           setShowModal(false);
         }}
         onOkText="Eliminar"
         content="Estas seguro de que deseas eliminar el producto?"
       />
-      <ModifyProduct product={productToModify} open={modifyModal} setOpen={setModifyModal} />
       <div className="flex w-full flex-col items-center  justify-center overflow-hidden p-3 md:items-start">
         <div className=" flex w-full flex-col gap-3  md:w-2/3 md:justify-start md:p-3">
           {currentCartItems.map((product, key) => {
@@ -112,7 +110,7 @@ export const Cart = () => {
                 <div className="w-100 flex h-[100px] w-full items-center">
                   <div className="h-100 flex w-full items-center ">
                     <Image
-                      src={product?.variants[0]?.urlImage}
+                      src={product?.urlImage}
                       classNames={{ img: 'min-w-[80px] w-[150px] md:size-[100px] z-1 object-contain' }}
                       alt="thermos"
                     />
@@ -121,18 +119,26 @@ export const Cart = () => {
 
                       <p className="line-clamp-1 text-white/60 md:line-clamp-2">{product.description}</p>
                       <div className="flex items-center justify-start gap-2">
-                        <Button
-                          variant="flat"
-                          className={classNames(
-                            'm-0 border-0 bg-transparent p-0 text-softWhite/80 outline-none hover:outline-none focus:outline-none'
-                          )}
-                          onPress={() => {
-                            setProductToModify(product);
-                            setModifyModal(true);
+                        <Select
+                          radius="sm"
+                          variant="bordered"
+                          size="sm"
+                          defaultSelectedKeys={[product.quantityToBuy]}
+                          onChange={(e) => updateCartItem({ ...product, quantityToBuy: Number(e.target.value) })}
+                          className="w-[80px] bg-[#262626] text-white"
+                          classNames={{
+                            trigger: 'bg-[#262626] border-1 border-white/30 focus:outline-none outline-none ', // Cambio de color del texto del trigger
+                            popoverContent: 'bg-[#262626]',
+                            value: 'text-white',
                           }}
                         >
-                          Modificar
-                        </Button>
+                          {quantities.map((quantity) => (
+                            <SelectItem key={quantity.key} value={quantity.value}>
+                              {quantity.label}
+                            </SelectItem>
+                          ))}
+                        </Select>
+
                         <Button
                           className="order-0 bg-transparent text-danger outline-none hover:outline-none focus:outline-none"
                           onPress={() => {
@@ -144,7 +150,7 @@ export const Cart = () => {
                         </Button>
                       </div>
                     </div>
-                    <div className="w-1/3 gap-1 md:flex">
+                    <div className="w-1/3 gap-1 md:flex md:justify-center">
                       <p className="text-white/60">{formattedPrice(product.price)}</p>
                       <p className="text-white/40">({product.quantityToBuy})</p>
                     </div>

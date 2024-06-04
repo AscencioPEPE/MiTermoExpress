@@ -1,4 +1,4 @@
-export type Products = {
+export interface Products {
   starIndex: number;
   endIndex: number;
   count: number;
@@ -6,25 +6,21 @@ export type Products = {
   pages: number;
   totalProductsPage: number;
   products: Product[];
-};
+}
 
-export type Product = {
+export interface Product {
   name: string;
+  sku: string;
   price: number;
   description: string;
-  quantity: number;
   capacity: number;
-  category: string;
-  availability: number;
-  variants: Variant[];
-};
-
-export type Variant = {
-  id: number;
+  quantity: number;
+  colorHex: string;
   color: string;
   urlImage: string;
   urlImageBack: string;
-  colorHex: string;
-};
+  category: string;
+  availability: number;
+}
 
 export type CartProduct = Product & { quantityToBuy: number };

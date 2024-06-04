@@ -64,11 +64,11 @@ export const Home = () => {
                 <h3 className="font-semibold text-white">
                   <Link href="#">
                     <span className="absolute inset-0" />
-                    Accessories
+                    Examples
                   </Link>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
+                  Look at all products made
                 </p>
               </div>
             </div>
@@ -91,7 +91,7 @@ export const Home = () => {
                 <h3 className="font-semibold text-white">
                   <Link href="#">
                     <span className="absolute inset-0" />
-                    Workspace
+                    Offers
                   </Link>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">

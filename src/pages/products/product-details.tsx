@@ -5,17 +5,18 @@ import { classNames } from '../../lib/classes';
 import { useProductQuery } from '../../services/useProduct';
 import { useParams } from 'wouter';
 import { formattedPrice } from '../../lib/formater';
-import { Button, Link, Tooltip } from '@nextui-org/react';
+import { Button, Link, Select, SelectItem, Tooltip } from '@nextui-org/react';
 import { getBgColor } from '../../lib/colors';
 import useCartStore from '../../zustand/cart';
 import { CartProduct } from '@/src/types/products';
 import { DrawerCart } from '../../components/drawer-cart';
 import useDimensions from '../../hooks/useDimensions';
 import { SkeletonProductDetail } from '../../components/skeleton-product-details';
+import { quantities } from '../../lib/constants';
 
 export default function ProductDetails() {
   const { productName }: { productName: string } = useParams();
-  const { storageCartItem } = useCartStore();
+  const { storageCartItem, updateCartItem } = useCartStore();
   const size = useDimensions();
 
   const [showCurrentCart, setShowCurrentCart] = useState({
@@ -25,19 +26,21 @@ export default function ProductDetails() {
 
   const { data: product, isLoading } = useProductQuery(productName);
 
-  const [selectedColor, setSelectedColor] = useState(product?.variants?.[0]?.color);
+  const [selectedColor, setSelectedColor] = useState<string>(product?.[0].color);
+  const [quantityToBuy, setQuantityToBuy] = useState(1);
+  console.log('quantityToBuy: ', quantityToBuy);
 
-  const getProductsByColor = product?.variants
-    ?.filter((variant) => variant.color === selectedColor)
-    .map((variant) => ({
-      urlImage: variant.urlImage,
-      urlImageBack: variant.urlImageBack,
+  const productByColor = product
+    ?.filter((prod) => prod?.color === selectedColor)
+    .map((image) => ({
+      urlImage: image.urlImage,
+      urlImageBack: image.urlImageBack,
     }))
     .flatMap((variant) => [variant.urlImage, variant.urlImageBack])
     .filter((url) => url);
 
   useEffect(() => {
-    setSelectedColor(product?.variants?.[0]?.color);
+    setSelectedColor(product?.[0].color);
   }, [product]);
 
   if (isLoading) return <SkeletonProductDetail />;
@@ -49,9 +52,9 @@ export default function ProductDetails() {
           {/* Image gallery */}
           <Tab.Group as="div" className="flex flex-col-reverse">
             {/* Image selector */}
-            <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
+            <div className="mx-auto mt-6 w-full max-w-2xl sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {getProductsByColor?.map((image, index) => (
+                {productByColor?.map((image, index) => (
                   <Tab
                     key={index}
                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-[#0f0e0e8c] text-sm font-medium uppercase text-gray-900  outline-none hover:border-primary hover:ring-0  focus:outline-none"
@@ -77,7 +80,7 @@ export default function ProductDetails() {
             </div>
 
             <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-              {getProductsByColor?.map((image, index) => (
+              {productByColor?.map((image, index) => (
                 <Tab.Panel key={index} className="flex items-center justify-center">
                   <img
                     src={image}
@@ -91,17 +94,17 @@ export default function ProductDetails() {
 
           {/* Product info */}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-            <h2 className="text-3xl font-bold tracking-tight text-softWhite">{product?.name}</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-softWhite">{product?.[0]?.name}</h2>
 
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl tracking-tight text-softWhite">{formattedPrice(product?.price ?? 0)}</p>
+              <p className="text-3xl tracking-tight text-softWhite">{formattedPrice(product?.[0]?.price ?? 0)}</p>
             </div>
 
             <div className="mt-6">
               <h3 className="sr-only">Description</h3>
 
-              <p className="space-y-6 text-base text-white/70">{product?.description}</p>
+              <p className="space-y-6 text-base text-white/70">{product?.[0]?.description}</p>
             </div>
 
             <form className="lg:my-6">
@@ -112,10 +115,10 @@ export default function ProductDetails() {
                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
                   <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
                   <span className="flex flex-wrap items-center gap-3">
-                    {product?.variants?.map((image) => {
+                    {product?.map((image) => {
                       return (
                         <RadioGroup.Option
-                          key={image?.id}
+                          key={image?.sku}
                           value={image?.color}
                           style={{ background: image?.colorHex }}
                           className={({ active, checked }) =>
@@ -143,15 +146,32 @@ export default function ProductDetails() {
                 </RadioGroup>
               </div>
 
-              <div className="mt-6 flex w-full flex-col gap-5 lg:my-6 lg:w-4/6 lg:flex-row lg:gap-2">
+              <div className="mt-6 flex w-full flex-col gap-3">
+                <Select
+                  radius="sm"
+                  label="Quantity to buy"
+                  variant="bordered"
+                  size="sm"
+                  defaultSelectedKeys={[1]}
+                  onChange={(e) => setQuantityToBuy(Number(e.target.value))}
+                  className=" w-full bg-[#262626] text-white lg:w-4/6"
+                  classNames={{
+                    trigger: 'bg-[#262626] border-1 border-white/30 focus:outline-none outline-none ', // Cambio de color del texto del trigger
+                    popoverContent: 'bg-[#262626]',
+                    value: 'text-white',
+                  }}
+                >
+                  {quantities.map((quantity) => (
+                    <SelectItem key={quantity.key} value={quantity.value}>
+                      {quantity.label}
+                    </SelectItem>
+                  ))}
+                </Select>
                 <Button
-                  className="text-gray flex w-full gap-1 border-1 border-white/20 bg-[#1A1A1A]"
+                  className="text-gray flex w-full gap-1 border-1 border-white/20 bg-[#1A1A1A] lg:w-4/6"
                   onPress={() => {
-                    storageCartItem({
-                      ...product,
-                      variants: Array(product.variants?.find((ele) => ele.color === selectedColor)),
-                    } as CartProduct);
-                    // storageCartItem(product as CartProduct);
+                    const getProduct = product.find((prod) => prod.color === selectedColor);
+                    storageCartItem({ ...getProduct, quantityToBuy });
                     const isSmallScreen = size === 'sm' || size === 'md' ? true : false;
                     setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
                   }}
@@ -163,10 +183,9 @@ export default function ProductDetails() {
                   className="flex w-full items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black lg:w-4/6"
                   href="/cart"
                   onPress={() => {
-                    storageCartItem({
-                      ...product,
-                      variants: Array(product.variants?.find((ele) => ele.color === selectedColor)),
-                    } as CartProduct);
+                    const getProduct = product.find((prod) => prod.color === selectedColor);
+
+                    storageCartItem({ ...getProduct, quantityToBuy });
                   }}
                 >
                   Buy

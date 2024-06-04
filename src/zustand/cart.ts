@@ -8,8 +8,8 @@ type CartProps = {
   lastItemAdded?: CartProduct;
   // getLastProductAdded: () => void;
   storageCartItem: (cartItem: CartProduct) => void;
-  removeCartItem: (itemName: CartProduct['name']) => void;
-  updateCartItem: (itemName: CartProduct['name'], newQuantity: CartProduct) => void;
+  removeCartItem: (sku: CartProduct['sku']) => void;
+  updateCartItem: (newQuantity: CartProduct) => void;
 };
 
 const useCartStore = create(
@@ -19,17 +19,10 @@ const useCartStore = create(
       lastItemAdded: undefined,
       storageCartItem: (cartItem) => {
         return set((state) => {
-          /**
-           * When the user add a new product/item, user will be add only one item
-           */
-          const DEFAULT_QUANTITY = 1;
-
-          const addQuantityToBuy: CartProduct = { ...cartItem, quantityToBuy: DEFAULT_QUANTITY };
-
-          const products = [...state.currentCartItems, addQuantityToBuy];
+          const products = [...state.currentCartItems, cartItem];
 
           const uniqueItems = products.reduce((acc: CartProduct[], current: CartProduct) => {
-            const isDuplicate = acc.some((item) => item.name === current.name);
+            const isDuplicate = acc.some((item) => item.sku === current.sku);
             if (!isDuplicate) {
               acc.push(current);
             }
@@ -38,21 +31,21 @@ const useCartStore = create(
 
           return {
             currentCartItems: uniqueItems,
-            lastItemAdded: addQuantityToBuy,
+            lastItemAdded: cartItem,
           };
         });
       },
-      removeCartItem: (itemName) => {
+      removeCartItem: (sku) => {
         return set((state) => ({
-          currentCartItems: state.currentCartItems.filter((item) => item.name !== itemName),
+          currentCartItems: state.currentCartItems.filter((item) => item.sku !== sku),
         }));
       },
-      updateCartItem: (itemName, newData) => {
+      updateCartItem: (newData) => {
         return set((state) => {
           return {
             lastItemAdded: { ...state.lastItemAdded, quantityToBuy: newData.quantityToBuy } as CartProduct,
             currentCartItems: state.currentCartItems.map((item) => {
-              if (item.name === itemName) {
+              if (item.sku === newData.sku) {
                 return newData;
               }
               return item;

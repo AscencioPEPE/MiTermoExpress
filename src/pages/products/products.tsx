@@ -8,8 +8,7 @@ import { DrawerCart } from '../../components/drawer-cart';
 import useDimensions from '../../hooks/useDimensions';
 import { useListProductQuery } from '../../services/useProduct';
 import { SkeletonProduct } from '../../components/skeleton-products';
-import { CartProduct } from '@/src/types/products';
-import { classNames } from '../../lib/classes';
+import { formattedPrice } from '../../lib/formater';
 
 export interface CartDrawer {
   isActive: boolean;
@@ -76,7 +75,7 @@ export const Products = () => {
                 {allProducts?.products?.map((product, index) => (
                   <div
                     key={index}
-                    className="flex w-full  flex-col gap-3 rounded-lg bg-[#1A1A1A] p-3 text-white/40  shadow-lg md:h-[320px] md:w-[250px] "
+                    className="flex w-full  flex-col gap-3 rounded-lg bg-[#1A1A1A] p-3 text-white/40  shadow-lg  md:w-[250px] "
                   >
                     <Link
                       href={`/product/${product.name}`}
@@ -84,7 +83,7 @@ export const Products = () => {
                     >
                       <div className="flex w-full items-center justify-center rounded-lg bg-[#0f0e0e8c]">
                         <Image
-                          src={product?.variants?.[0]?.urlImage}
+                          src={product?.urlImage}
                           alt="thermos"
                           className="object-contain object-center py-2"
                           classNames={{
@@ -92,10 +91,13 @@ export const Products = () => {
                           }}
                         />
                       </div>
-                      <div className="flex h-full w-full flex-col gap-2">
-                        <h4 className="truncate font-semibold text-softWhite ">{product.name}</h4>
+                      <div className="flex h-full w-full flex-col justify-between gap-2">
+                        <h4 className="font-semibold text-softWhite ">{product.name}</h4>
                         <p className="line-clamp-3 text-sm text-white/40">{product.description}</p>
-                        <span className="text-softWhite">${product.price}</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-softWhite">{formattedPrice(product.price)}</span>
+                          <span className="text-xs text-white/70">{product.capacity}oz</span>
+                        </div>
                       </div>
                     </Link>
                     <Divider className="my-4 bg-white/10 md:m-0" />
@@ -103,7 +105,7 @@ export const Products = () => {
                       <Button
                         className="text-gray flex w-full gap-1 border-1 border-white/20 bg-transparent"
                         onPress={() => {
-                          storageCartItem({ ...product, variants: Array(product.variants?.[0]) } as CartProduct);
+                          storageCartItem({ ...product, quantityToBuy: 1 });
                           const isSmallScreen = size === 'sm' || size === 'md' ? true : false;
                           setShowCurrentCart({ isActive: true, isMobile: isSmallScreen });
                         }}
@@ -114,9 +116,7 @@ export const Products = () => {
                       <Link
                         className="flex w-4/6 items-center justify-center rounded-lg bg-[#E0F6BF] py-2 text-sm text-black"
                         href="/cart"
-                        onPress={() =>
-                          storageCartItem({ ...product, variants: Array(product.variants?.[0]) } as CartProduct)
-                        }
+                        onPress={() => storageCartItem({ ...product, quantityToBuy: 1 })}
                       >
                         Buy
                       </Link>
