@@ -10,15 +10,15 @@ export interface Products {
 
 export interface Product {
   name: string;
-  sku: string;
-  price: number;
   description: string;
-  capacity: number;
+  price: number;
   quantity: number;
-  colorHex: string;
   color: string;
+  sku: string;
+  colorHex: string;
   urlImage: string;
   urlImageBack: string;
+  capacity: number;
   category: string;
   availability: number;
 }

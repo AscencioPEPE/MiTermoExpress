@@ -28,8 +28,6 @@ export const Cart = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState<CartProduct | undefined>(undefined);
-  const [productToModify, setProductToModify] = useState<CartProduct | undefined>(undefined);
-  const [modifyModal, setModifyModal] = useState(false);
 
   const handlePayment = () => {
     /**
@@ -47,9 +45,13 @@ export const Cart = () => {
     const items: Payment['items'] = currentCartItems.map((product) => ({
       name: product.name,
       description: product.description,
-      capacity: product.capacity,
       price: Number(formattedFixed(product.price)),
       quantity: product.quantityToBuy,
+      color: product.color,
+      sku: product.sku,
+      colorHex: product.colorHex,
+      urlImage: product.urlImage,
+      urlImageBack: product.urlImageBack,
     }));
 
     /**
