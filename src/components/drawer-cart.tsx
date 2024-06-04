@@ -30,12 +30,12 @@ export const DrawerCart = ({ setShowCurrentCart, showCurrentCart }: DrawerCartPr
             </div>
             <div className="my-8 flex flex-col items-start gap-y-4">
               <div className="flex w-full justify-center">
-                <Image className="size-[140px] object-contain" src={lastItemAdded?.variants?.[0]?.urlImage} />
+                <Image className="size-[140px] object-contain" src={lastItemAdded?.urlImage} />
               </div>
               <h4 className="w-full text-center text-lg font-bold">{lastItemAdded?.name}</h4>
               <span className="text-white/60">{lastItemAdded?.description}</span>
 
-              <span className="text-white/60">Color: {lastItemAdded?.variants?.[0]?.color}</span>
+              <span className="text-white/60">Color: {lastItemAdded?.color}</span>
             </div>
           </div>
           <Link href="/cart" className="flex justify-center rounded-lg bg-blue-500 py-1.5 font-bold text-white/60">
@@ -56,10 +56,10 @@ export const DrawerCart = ({ setShowCurrentCart, showCurrentCart }: DrawerCartPr
               <h3 className="w-full text-center font-bold text-white/80">Has añadido un producto a tu inventario</h3>
             </div>
             <div className="my-8 flex flex-col items-center gap-y-2">
-              <Image className="size-[100px] object-contain" src={lastItemAdded?.variants?.[0]?.urlImage} />
+              <Image className="size-[100px] object-contain" src={lastItemAdded?.urlImage} />
               <span className="font-bold">{lastItemAdded?.name}</span>
               <span className="text-white/60">{lastItemAdded?.description}</span>
-              <span className="text-white/60">Color: {lastItemAdded?.variants?.[0]?.color}</span>
+              <span className="text-white/60">Color: {lastItemAdded?.color}</span>
             </div>
           </div>
           <Link href="/cart" className="flex justify-center rounded-lg bg-blue-500 py-1.5 font-bold text-white/60">
