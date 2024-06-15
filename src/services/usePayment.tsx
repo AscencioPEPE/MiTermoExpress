@@ -6,7 +6,7 @@ export const usePaymentQuery = () =>
   useMutation({
     mutationKey: ['payment'],
     mutationFn: (product: Payment) => payProduct(product),
-    onSuccess: (data: { idOrder: number; url: string }) => {
-      window.open(data.url, '_blank');
+    onSuccess: (data: string) => {
+      window.open(data, '_blank');
     },
   });

@@ -6,8 +6,14 @@ export const listOrdersCustomer = async (email: string) => {
   return data;
 };
 
-export const listOrders = async () => {
+export const listOrdersByCustomer = async () => {
   const { data } = await apiRequest({ url: '/customer/all', method: 'GET' });
+
+  return data;
+};
+
+export const listAllOrders = async () => {
+  const { data } = await apiRequest({ url: '/order/all', method: 'GET' });
 
   return data;
 };

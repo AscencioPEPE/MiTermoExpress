@@ -1,61 +1,58 @@
+import { useState } from 'react';
 import { statusColor } from '../../lib/colors';
 import { formattedPrice } from '../../lib/formater';
 import { useOrdersCustomerQuery } from '../../services/useOrder';
 import useUserStore from '../../zustand/user';
-import { Accordion, AccordionItem, Image, Link, Pagination } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button, Card, Image, Link, Pagination } from '@nextui-org/react';
+import { Product } from '@/src/types/products';
 
 const Orders = () => {
   const { currentUser } = useUserStore();
   const { data, isLoading } = useOrdersCustomerQuery(currentUser?.email);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const productOrders = data?.orders?.flatMap(({ products, status }) => {
-    return products?.map((product) => ({ ...product, status }));
-  });
+  const title = (product: Product, status: string) => {
+    return (
+      <div className="flex justify-between">
+        <h3>{`${product?.name}`} </h3>
+        <span>{`Status: ${status}`} </span>
+      </div>
+    );
+  };
+
+  const preview = (product: Product) => {
+    return <Image src={product?.urlImage} className="size-[50px]" />;
+  };
 
   return (
-    <div className="flex flex-col gap-4 px-10 py-5">
-      {productOrders?.map((product, index) => (
-        <Link href={`/product/${product.name}`} className="flex gap-10" key={index}>
-          <div className="flex h-[200px] w-full gap-4 rounded-lg bg-[#1A1A1A] p-5 shadow-inner">
-            <div className="flex size-[160px] items-center justify-center">
-              <Image src={product?.variant?.urlImage} classNames={{ img: 'size-full object-cover' }} />
-            </div>
-            <div className="flex w-full flex-col gap-4">
-              <div className="flex w-full justify-between">
-                <h2 className="text-2xl font-bold text-softWhite hover:text-white/90">{product?.name}</h2>
-                <h3 className="font-bold text-softWhite hover:text-white/90">
-                  Status: <span className={statusColor(product?.status)}>{product?.status}</span>
-                </h3>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-sm text-white/70 hover:text-white/60">
-                  Quantity: <span>({product?.quantity})</span>
-                </p>
-                <span className="font-bold text-softWhite hover:text-white/90">
-                  {formattedPrice(product?.price || 0)}
-                </span>
-              </div>
-              <p className="line-clamp-3 text-white/70">{product?.description}</p>
-            </div>
-          </div>
-        </Link>
-      ))}
-      {/**
-       * TODO:
-       *  */}
-      {/* <div className="mt-3 flex items-center justify-end gap-3">
-        <p className="flex gap-2 text-white/60">
-          <span className="font-bold ">{10}</span>items of
-          <span className="font-bold ">{10} </span>total
-        </p>
-        <Pagination
-          size="lg"
-          total={10 || 1}
-          classNames={{ item: 'text-white' }}
-          variant="bordered"
-          // onChange={setPage}
-        />
-      </div> */}
+    <div className="flex flex-col gap-4  px-10 py-5">
+      <Accordion>
+        {data?.orders.slice(1).map((item, index) => (
+          <AccordionItem
+            className="mb-5"
+            classNames={{ trigger: 'bg-[#0000007c] ' }}
+            key={index}
+            title={title(item?.products?.[0] as Product, item?.status)}
+            startContent={preview(item?.products?.[0] as Product)}
+          >
+            {item.products.map((product, idx) => (
+              <Card key={idx} className="flex w-full gap-3 bg-[#0f0e0eb1] p-4 lg:flex-row">
+                <div className="w-[90px] min-w-[80px]">
+                  <Image src={product.urlImage} alt={product.name} className="size-full object-contain" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div>
+                    <h3 className="text-lg font-bold text-softWhite">{product.name}</h3>
+                  </div>
+                  <span className="text-sm text-white/70">color: {product.color}</span>
+                  <span className="text-sm font-semibold text-white/75">price: {formattedPrice(product.price)}</span>
+                  <p className="text-sm text-white/80">{product.description}</p>
+                </div>
+              </Card>
+            ))}
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   );
 };

@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { listOrdersCustomer, listOrders } from '../sdk/order';
+import { listOrdersCustomer, listAllOrders, listOrdersByCustomer } from '../sdk/order';
 import { Order } from '@/src/types/order';
+import { AllOrders, ProductByCustomer } from '../types/admin-order';
 
 export const useOrdersCustomerQuery = (email: string) =>
   useQuery<Order>({ queryKey: ['orders'], queryFn: () => listOrdersCustomer(email) });
 
-export const useOrdersQuery = () => useQuery({ queryKey: ['orders'], queryFn: listOrders });
+export const useAllOrdersByCustomerQuery = () =>
+  useQuery<ProductByCustomer[]>({ queryKey: ['orders'], queryFn: listOrdersByCustomer });
+
+export const useAllOrdersQuery = () => useQuery<AllOrders[]>({ queryKey: ['orders'], queryFn: listAllOrders });

@@ -13,10 +13,14 @@ export interface OrderElement {
 
 export interface Product {
   name: string;
+  sku: string;
   price: number;
-  variant: Variant;
-  quantity: number;
   description: string;
+  colorHex: string;
+  color: string;
+  urlImage: string;
+  urlImageBack: string;
+  quantity: number;
 }
 
 export interface Variant {
