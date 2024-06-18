@@ -39,8 +39,8 @@ const DropdownActions = <T,>(props: DropdownActionsProps<T>) => {
   };
 
   return (
-    <Dropdown>
-      <DropdownTrigger>
+    <Dropdown className="border border-white/20 bg-[#1A1A1A]">
+      <DropdownTrigger className="hover:bg-[#0f0e0e8c]">
         <Button
           isIconOnly
           variant="ghost"

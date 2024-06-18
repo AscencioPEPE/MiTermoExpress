@@ -32,7 +32,7 @@ interface RTableProps<T> {
   showFooter?: boolean;
 }
 
-const RTable = <T,>({ data, columns, limit, q, caption, showFooter }: RTableProps<T>) => {
+const NestedTable = <T,>({ data, columns, limit, q, caption, showFooter }: RTableProps<T>) => {
   const [sorting, setSorting] = useState<{ id: string; desc: boolean }[]>([]);
   const [visibleColumns, setVisibleColumns] = useState<{ header: string; active: boolean }[]>(columns);
   const [expanded, setExpanded] = useState({});
@@ -186,4 +186,4 @@ const RTable = <T,>({ data, columns, limit, q, caption, showFooter }: RTableProp
   );
 };
 
-export default RTable;
+export default NestedTable;
