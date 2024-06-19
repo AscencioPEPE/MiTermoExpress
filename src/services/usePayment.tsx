@@ -15,7 +15,7 @@ export const useCheckPaymentQuery = () =>
   useMutation({
     mutationKey: ['payment'],
     mutationFn: (sessionId: string) => checkPayment(sessionId),
-    onSuccess: (data: string) => {
+    onSuccess: (data: any) => {
       // console.log('data: ', data);
     },
   });
