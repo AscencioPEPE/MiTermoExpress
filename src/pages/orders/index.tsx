@@ -1,15 +1,23 @@
 import { useState } from 'react';
-import { statusColor } from '../../lib/colors';
 import { formattedPrice } from '../../lib/formater';
 import { useOrdersCustomerQuery } from '../../services/useOrder';
 import useUserStore from '../../zustand/user';
 import { Accordion, AccordionItem, Button, Card, Image, Link, Pagination } from '@nextui-org/react';
 import { Product } from '@/src/types/products';
+import { ModalSimple } from '../../components/modal-simple';
+import { ModalReLogin } from '../../components/modal-re-login';
 
 const Orders = () => {
   const { currentUser } = useUserStore();
-  const { data, isLoading } = useOrdersCustomerQuery(currentUser?.email);
-  const [isOpen, setIsOpen] = useState(false);
+  const { data, isLoading, isError } = useOrdersCustomerQuery(currentUser?.email);
+
+  if (isError) {
+    return (
+      <ModalSimple isOpen={isError} size="lg" className="bg-[#1A1A1A]">
+        <ModalReLogin />
+      </ModalSimple>
+    );
+  }
 
   const title = (product: Product, status: string) => {
     return (

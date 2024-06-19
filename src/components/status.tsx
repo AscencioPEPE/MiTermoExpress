@@ -1,25 +1,24 @@
 import React from 'react';
+import { classNames } from '../lib/classes';
 
 export const StatusCell = ({ status }: { status: string }) => {
   console.log('status: ', status);
   let statusClass = '';
 
   switch (status) {
-    case 'SUCCESS':
+    case 'paid':
       statusClass = 'text-success';
-      break;
-    case 'Inactive':
-      statusClass = 'text-secondary';
       break;
     case 'PENDING':
       statusClass = 'text-warning';
       break;
-    case 'Banned':
+    case 'canceled':
       statusClass = 'text-danger';
       break;
+
     default:
       statusClass = 'text-muted';
   }
 
-  return <span className={statusClass}>{status}</span>;
+  return <span className={classNames(statusClass, 'uppercase')}>{status}</span>;
 };

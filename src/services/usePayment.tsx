@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { Payment } from '../types/payment';
-import { payProduct } from '../sdk/payment';
+import { payProduct, checkPayment } from '../sdk/payment';
 
 export const usePaymentQuery = () =>
   useMutation({
@@ -8,5 +8,14 @@ export const usePaymentQuery = () =>
     mutationFn: (product: Payment) => payProduct(product),
     onSuccess: (data: string) => {
       window.open(data, '_blank');
+    },
+  });
+
+export const useCheckPaymentQuery = () =>
+  useMutation({
+    mutationKey: ['payment'],
+    mutationFn: (sessionId: string) => checkPayment(sessionId),
+    onSuccess: (data: string) => {
+      // console.log('data: ', data);
     },
   });

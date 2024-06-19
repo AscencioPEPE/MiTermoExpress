@@ -10,9 +10,10 @@ import { ModalUpdateAdmin } from '../../components/modal-update-admin';
 import useAdminStore from '../../zustand/admin';
 import { AdminResponseApi } from '@/src/types/admin';
 import { ModalConfirmation } from '../../components/modal-confirmation';
+import { ModalReLogin } from '../../components/modal-re-login';
 
 const Admin = () => {
-  const { data: admins = [], refetch } = useListAdminsQuery();
+  const { data: admins = [], refetch, isError } = useListAdminsQuery();
   const { mutateAsync: deleteAdmin } = useDeleteAdminQuery();
   const { storageCurrentAdmin, currentAdmin } = useAdminStore();
 
@@ -35,6 +36,14 @@ const Admin = () => {
   useEffect(() => {
     refetch();
   }, [admins]);
+
+  if (isError) {
+    return (
+      <ModalSimple isOpen={isError} size="lg" className="bg-[#1A1A1A]">
+        <ModalReLogin />
+      </ModalSimple>
+    );
+  }
 
   return (
     <div className="flex h-dvhContainer justify-center p-10">

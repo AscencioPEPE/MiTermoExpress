@@ -10,3 +10,12 @@ export const payProduct = async (product: Payment) => {
 
   return data;
 };
+
+export const checkPayment = async (sessionId: string) => {
+  const { data } = await apiRequest({
+    url: `api/payments/${sessionId}`,
+    method: 'POST',
+  });
+
+  return data;
+};

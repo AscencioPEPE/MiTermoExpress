@@ -47,6 +47,7 @@ export const Cart = () => {
       description: product.description,
       price: Number(formattedFixed(product.price)),
       quantity: product.quantityToBuy,
+      capacity: product.capacity,
       color: product.color,
       sku: product.sku,
       colorHex: product.colorHex,

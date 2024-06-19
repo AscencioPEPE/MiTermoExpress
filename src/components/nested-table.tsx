@@ -145,6 +145,12 @@ const NestedTable = <T,>({ data, columns, limit, q, caption, showFooter }: RTabl
                               </TableRow>
                             );
                           })}
+                          <TableRow className="flex w-full justify-start">
+                            <TableCell className="flex flex-col font-bold">
+                              <span className="text-md">TOTAL</span>
+                              {formattedPrice((row as any).original?.total ?? 0)}
+                            </TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                     </TableCell>

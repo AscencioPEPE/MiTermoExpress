@@ -9,6 +9,8 @@ import useDimensions from '../../hooks/useDimensions';
 import { useListProductQuery } from '../../services/useProduct';
 import { SkeletonProduct } from '../../components/skeleton-products';
 import { formattedPrice } from '../../lib/formater';
+import { ModalSimple } from '../../components/modal-simple';
+import { ModalReLogin } from '../../components/modal-re-login';
 
 export interface CartDrawer {
   isActive: boolean;
@@ -25,10 +27,18 @@ export const Products = () => {
     isActive: false,
   });
 
-  const { data: allProducts, isLoading } = useListProductQuery({ limit, page, filters });
+  const { data: allProducts, isLoading, isError } = useListProductQuery({ limit, page, filters });
 
   const { storageCartItem } = useCartStore();
   const size = useDimensions();
+
+  if (isError) {
+    return (
+      <ModalSimple isOpen={isError} size="lg" className="bg-[#1A1A1A]">
+        <ModalReLogin />
+      </ModalSimple>
+    );
+  }
 
   return (
     <motion.div
