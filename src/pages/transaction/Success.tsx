@@ -3,6 +3,7 @@ import { useRoute } from '../../hooks/useParams';
 import { Divider, Image, Link } from '@nextui-org/react';
 import { useEffect } from 'react';
 import { formattedPrice } from '../../lib/formater';
+import { Product } from '@/src/types/products';
 
 export interface QueryParamProps {
   session_id: string;
@@ -21,7 +22,7 @@ const Success = () => {
       <div className="rounded-lg bg-[#1A1A1A]  sm:w-[500px] sm:p-5 sm:shadow-gray">
         <h3 className="text-center text-2xl font-bold text-primary">Success!</h3>
         <p className="text-center text-lg">Thank you to bought with us</p>
-        {data?.order?.products.map((product) => (
+        {data?.order?.products.map((product: Product) => (
           <>
             <div className="my-5 flex w-full gap-5 ">
               <div className="flex w-full">
