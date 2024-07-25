@@ -23,6 +23,9 @@ export const createProduct = async (newProduct: any) => {
     url: 'product',
     method: 'POST',
     data: newProduct,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
   return data;
@@ -33,6 +36,9 @@ export const updateProduct = async (product: any) => {
     url: `product/${product.sku}`,
     method: 'PUT',
     data: product,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
   return data;
