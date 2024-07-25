@@ -109,16 +109,16 @@ export default function Layout({ children }: LayoutProps) {
                           <Chip variant="faded" color="warning" classNames={{ base: 'bg-white/15 border-white/30' }}>
                             GUEST
                           </Chip>
-                          <span>{currentUser.name}</span>
+                          <span className="text-softWhite">{currentUser.name}</span>
                         </div>
                       )}
                       {/*
                       USER AUNTHENTICATED
                       */}
                       {currentUser?.token ? (
-                        <Menu as="div" className="relative ml-3">
+                        <Menu as="div" className="relative ml-3 bg-transparent">
                           <div>
-                            <Menu.Button className="relative flex  max-w-xs items-center p-0 text-sm outline-none hover:border-0 focus:outline-none">
+                            <Menu.Button className="relative flex max-w-xs  items-center bg-transparent p-0 text-sm outline-none hover:border-0 focus:outline-none">
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
                               <Avatar
@@ -164,7 +164,7 @@ export default function Layout({ children }: LayoutProps) {
                       ) : (
                         <Menu as="div" className="relative ml-3">
                           <div>
-                            <Menu.Button className="relative flex  max-w-xs items-center p-0 text-sm outline-none hover:border-0 focus:outline-none">
+                            <Menu.Button className="relative flex  max-w-xs items-center bg-transparent p-0 text-sm outline-none hover:border-transparent focus:outline-none">
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
                               <Avatar />

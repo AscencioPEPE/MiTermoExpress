@@ -27,8 +27,11 @@ export const Sidebar = ({ filters, setFilters }: ISidebar) => {
               <AccordionItem
                 key={item.key}
                 title={item.label}
-                classNames={{ title: 'text-white' }}
-                className="m-0 w-full"
+                classNames={{
+                  title: 'text-white',
+                  trigger: 'bg-[#1A1A1A] outline-none focus:outline-none hover:border-transparent',
+                }}
+                className="m-0 w-full bg-[#1A1A1A]"
               >
                 {item.inputs.map((input) => {
                   if (item.category === 'priceOrder') {

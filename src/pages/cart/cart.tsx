@@ -171,9 +171,9 @@ export const Cart = () => {
           <div className="flex flex-col p-3">
             <div className="flex flex-col justify-center gap-5 rounded-md bg-[#1A1A1A] px-2 py-5 shadow-lg">
               <div className="flex items-center gap-5">
-                <span className="text-softWhite/60">Shipping:</span>
+                <span className="text-white/70">Shipping:</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-softWhite/80">Free</span>
+                  <span className="text-white/80">Free</span>
                   <Tooltip content="Only Mexico" className="bg-[#0f0e0e] text-white/50">
                     <QuestionMarkCircleIcon className="size-[25px] cursor-pointer text-blue-500" />
                   </Tooltip>
@@ -181,8 +181,8 @@ export const Cart = () => {
               </div>
               <Divider className="bg-softWhite/20" />
               <div className="flex items-center gap-5">
-                <span className="text-softWhite/60">Total: </span>
-                <span className="text-softWhite/80">{formattedPrice(Math.abs(getTotal() + SHIPPING || 0))}</span>
+                <span className="text-white/70">Total: </span>
+                <span className="text-white/80">{formattedPrice(Math.abs(getTotal() + SHIPPING || 0))}</span>
               </div>
               <Button className="bg-blue-500 font-bold text-white" onPress={handlePayment} isLoading={isPending}>
                 Go to buy!
@@ -202,19 +202,21 @@ export const Cart = () => {
         >
           <div className="flex flex-col items-start justify-center  gap-y-2 ">
             <div className="flex w-1/2 items-center justify-between">
-              <h3 className="text-xl font-bold">Total</h3>
-              <h3 className="font-bold">{formattedPrice(getTotal())}</h3>
+              <h3 className="text-xl font-bold text-softWhite">Total</h3>
+              <h3 className="font-bold text-softWhite">{formattedPrice(getTotal())}</h3>
             </div>
-            <div className="mb-4 flex w-1/2 items-center justify-between">
+            <div className="mb-4 flex w-1/2 items-center justify-between text-softWhite">
               <p>Shipped</p>
-              <p className="font-bold">Free</p>
+              <p className="font-bold text-softWhite">Free</p>
             </div>
             <div className="max-h-[180px] w-full overflow-auto">
               {currentCartItems.map((item, index) => (
                 <div className="flex items-center justify-between border-b-1 border-white/10 py-2" key={index}>
-                  <p className="w-1/3 text-sm">{item.name}</p>
-                  <p className="w-1/3 text-sm">({item.quantityToBuy})</p>
-                  <p className="w-1/3 text-sm font-bold">{formattedPrice(Math.abs(item.price * item.quantityToBuy))}</p>
+                  <p className="w-1/3 text-sm text-softWhite">{item.name}</p>
+                  <p className="w-1/3 text-sm text-softWhite">({item.quantityToBuy})</p>
+                  <p className="w-1/3 text-sm font-bold text-softWhite">
+                    {formattedPrice(Math.abs(item.price * item.quantityToBuy))}
+                  </p>
                 </div>
               ))}
             </div>

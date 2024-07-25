@@ -41,7 +41,7 @@ const AuthLogin = () => {
             label="Email"
             size="sm"
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('username')}
             isInvalid={!!errors.username}
           />
@@ -50,7 +50,7 @@ const AuthLogin = () => {
             size="sm"
             type={showPassword ? 'text' : 'password'}
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none "
             {...register('password')}
             isInvalid={!!errors.password}
             endContent={
@@ -73,10 +73,10 @@ const AuthLogin = () => {
           </Button>
         </div>
       </form>
-      <p className="my-5 w-full text-center">
+      <p className="my-5 w-full text-center text-softWhite">
         <span>or</span>
       </p>
-      <p className="w-full text-center">
+      <p className="w-full text-center text-softWhite">
         Do you want to create an{' '}
         <Link href="/auth/register/customer" className="text-secondary">
           account?

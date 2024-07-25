@@ -85,7 +85,7 @@ const AuthGuest = () => {
       </p>
       <p className="w-full text-center">
         Do you want to{' '}
-        <Link href="auth/register" className="text-secondary">
+        <Link href="/auth/register/customer" className="text-secondary">
           register?
         </Link>
       </p>

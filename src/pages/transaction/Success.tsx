@@ -24,7 +24,7 @@ const Success = () => {
     <div className="flex w-full flex-col items-center justify-center sm:py-5">
       <div className="rounded-lg bg-[#1A1A1A]  sm:w-[500px] sm:p-5 sm:shadow-gray">
         <h3 className="text-center text-2xl font-bold text-primary">Success!</h3>
-        <p className="text-center text-lg">Thank you to bought with us</p>
+        <p className="text-center text-lg text-softWhite">Thank you to bought with us</p>
         {data?.order?.products.map((product: Product) => (
           <>
             <div className="my-5 flex w-full gap-5 ">
@@ -51,7 +51,7 @@ const Success = () => {
             <Divider className="bg-white/20" />
           </>
         ))}
-        <h3 className="mt-3 text-center text-lg font-bold">
+        <h3 className="mt-3 text-center text-lg font-bold text-softWhite">
           Total: <span>{formattedPrice(data?.order?.total ?? 0)}</span>
         </h3>
 

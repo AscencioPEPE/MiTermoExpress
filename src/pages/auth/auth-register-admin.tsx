@@ -40,7 +40,7 @@ const AuthRegisterAdmin = () => {
             label="Username"
             size="sm"
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('username')}
             isInvalid={!!errors.username}
           />
@@ -49,13 +49,13 @@ const AuthRegisterAdmin = () => {
             size="sm"
             type={showPassword ? 'text' : 'password'}
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('password')}
             isInvalid={!!errors.password}
             endContent={
               <Button
                 isIconOnly
-                className="m-0 bg-transparent p-0 hover:border-none hover:outline-none focus:outline-none"
+                className="m-0 bg-transparent p-0 text-softWhite hover:border-none hover:outline-none focus:outline-none"
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
               >
@@ -72,10 +72,10 @@ const AuthRegisterAdmin = () => {
           </Button>
         </div>
       </form>
-      <p className="my-5 w-full text-center">
+      <p className="my-5 w-full text-center text-softWhite">
         <span>or</span>
       </p>
-      <p className="w-full text-center font-bold">
+      <p className="w-full text-center font-bold text-softWhite">
         Do you have{' '}
         <Link href="/auth/login" className="text-secondary">
           account?

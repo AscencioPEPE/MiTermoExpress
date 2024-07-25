@@ -16,7 +16,7 @@ export const createAdmin = async (adminData: Admin) => {
 export const updateAdmin = async (adminData: Admin) => {
   const { data } = await apiRequest({
     url: `/super-admin/admin?username=${adminData.username}`,
-    method: 'UPDATE',
+    method: 'PUT',
     data: adminData,
   });
 

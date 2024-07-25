@@ -49,7 +49,7 @@ const AuthRegisterCustomer = () => {
             label="Full name"
             size="sm"
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('name')}
             isInvalid={!!errors.name}
           />
@@ -58,7 +58,7 @@ const AuthRegisterCustomer = () => {
             label="Phone"
             size="sm"
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('phone')}
             isInvalid={!!errors.phone}
           />
@@ -66,7 +66,7 @@ const AuthRegisterCustomer = () => {
             label="Address"
             size="sm"
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('address')}
             isInvalid={!!errors.address}
           />
@@ -74,7 +74,7 @@ const AuthRegisterCustomer = () => {
             label="Email"
             size="sm"
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('email')}
             isInvalid={!!errors.email}
           />
@@ -83,7 +83,7 @@ const AuthRegisterCustomer = () => {
             size="sm"
             type={showPassword ? 'text' : 'password'}
             variant="underlined"
-            className="outline-none hover:outline-none focus:outline-none"
+            className="text-softWhite outline-none hover:outline-none focus:outline-none"
             {...register('password')}
             isInvalid={!!errors.address}
             endContent={
@@ -109,7 +109,7 @@ const AuthRegisterCustomer = () => {
       <p className="w-full text-center">
         <span>or</span>
       </p>
-      <p className="w-full text-center font-bold">
+      <p className="w-full text-center font-bold text-softWhite">
         Do you have{' '}
         <Link href="/auth/login" className="text-secondary">
           account?
