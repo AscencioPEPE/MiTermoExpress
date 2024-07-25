@@ -4,6 +4,7 @@ import { Divider, Image, Link } from '@nextui-org/react';
 import { useEffect } from 'react';
 import { formattedPrice } from '../../lib/formater';
 import { Product } from '@/src/types/products';
+import useCartStore from '../../zustand/cart';
 
 export interface QueryParamProps {
   session_id: string;
@@ -12,9 +13,11 @@ export interface QueryParamProps {
 const Success = () => {
   const [_, queryParam] = useRoute('/success');
   const { mutateAsync: checkPayment, data } = useCheckPaymentQuery();
+  const { clearCartItems } = useCartStore();
 
   useEffect(() => {
     checkPayment((queryParam as unknown as QueryParamProps).session_id);
+    clearCartItems();
   }, []);
 
   return (

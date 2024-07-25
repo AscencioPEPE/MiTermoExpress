@@ -39,6 +39,7 @@ const config = () => {
     headers: {
       //@ts-ignore
       Authorization: 'Bearer ' + userInfo()?.userInfo?.token,
+      'Content-Type': 'multipart/form-data',
     },
   };
 };
@@ -47,5 +48,6 @@ export const apiRequest = axios.create({
   baseURL,
   headers: {
     Authorization: config().headers.Authorization,
+    'Content-Type': 'multipart/form-data',
   },
 });

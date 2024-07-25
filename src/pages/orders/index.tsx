@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { formattedPrice } from '../../lib/formater';
 import { useOrdersCustomerQuery } from '../../services/useOrder';
 import useUserStore from '../../zustand/user';

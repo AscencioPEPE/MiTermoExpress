@@ -10,6 +10,7 @@ type CartProps = {
   storageCartItem: (cartItem: CartProduct) => void;
   removeCartItem: (sku: CartProduct['sku']) => void;
   updateCartItem: (newQuantity: CartProduct) => void;
+  clearCartItems: () => void;
 };
 
 const useCartStore = create(
@@ -51,6 +52,11 @@ const useCartStore = create(
               return item;
             }),
           };
+        });
+      },
+      clearCartItems: () => {
+        return set(() => {
+          return { currentCartItems: [] };
         });
       },
     }),

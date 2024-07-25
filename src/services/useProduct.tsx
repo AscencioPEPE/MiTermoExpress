@@ -1,6 +1,8 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { createProduct, getProduct, listProducts, removeProduct, updateProduct } from '../sdk/product';
 import { Product, Products } from '../types/products';
+import { toast } from 'react-toastify';
+import { queryClient } from '../lib/queryClient';
 
 /**
  * Retrieve a list of products, you can added queryPArams to get filters
@@ -23,14 +25,39 @@ export const useProductQuery = (productName: string) =>
  * Create a new Product
  */
 export const useCreateProductQuery = () =>
-  useMutation({ mutationKey: ['product'], mutationFn: (product: any) => createProduct(product) });
+  useMutation({
+    mutationKey: ['product'],
+    mutationFn: (product: any) => createProduct(product),
+    onSuccess: (data: Product) => {
+      toast('Product created successfully!');
+    },
+    onError: () => toast('An error was ocurred, the product wasnt create!'),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['product'] }),
+  });
+
 /**
  * Update a product
  */
 export const useUpdateProductQuery = () =>
-  useMutation({ mutationKey: ['product'], mutationFn: (product: any) => updateProduct(product, product.name) });
+  useMutation({
+    mutationKey: ['product'],
+    mutationFn: (product: any) => updateProduct(product),
+    onSuccess: (data: Product) => {
+      toast('Product updated successfully!');
+    },
+    onError: () => toast('An error was ocurred, the product wasnt update!'),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['product'] }),
+  });
 /**
  * Delete product by name
  */
 export const useRemoveProductQuery = () =>
-  useMutation({ mutationKey: ['product'], mutationFn: (productName: string) => removeProduct(productName) });
+  useMutation({
+    mutationKey: ['product'],
+    mutationFn: (productName: string) => removeProduct(productName),
+    onSuccess: (data: Product) => {
+      toast('Product deleted successfully!');
+    },
+    onError: () => toast('An error was ocurred, the product wasnt deleted!'),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['product'] }),
+  });

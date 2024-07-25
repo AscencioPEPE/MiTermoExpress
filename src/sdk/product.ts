@@ -28,19 +28,19 @@ export const createProduct = async (newProduct: any) => {
   return data;
 };
 
-export const updateProduct = async (product: any, productName: string) => {
+export const updateProduct = async (product: any) => {
   const { data } = await apiRequest({
-    url: `product?${productName}`,
-    method: 'UPDATE',
+    url: `product/${product.sku}`,
+    method: 'PUT',
     data: product,
   });
 
   return data;
 };
 
-export const removeProduct = async (productName: string) => {
+export const removeProduct = async (sku: string) => {
   const { data } = await apiRequest({
-    url: `product?${productName}`,
+    url: `product?sku=${sku}`,
     method: 'DELETE',
   });
 

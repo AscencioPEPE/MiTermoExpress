@@ -2,14 +2,17 @@ import { useRoute } from '../../hooks/useParams';
 import { useCheckPaymentQuery } from '../../services/usePayment';
 import { Link } from '@nextui-org/react';
 import { QueryParamProps } from './Success';
+import useCartStore from '../../zustand/cart';
 import { useEffect } from 'react';
 
 const Failure = () => {
+  const { clearCartItems } = useCartStore();
   const [_, queryParam] = useRoute('/success');
   const { mutateAsync: checkPayment } = useCheckPaymentQuery();
 
   useEffect(() => {
     checkPayment((queryParam as unknown as QueryParamProps).session_id);
+    clearCartItems();
   }, []);
 
   return (

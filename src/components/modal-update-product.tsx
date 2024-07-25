@@ -1,16 +1,19 @@
 import { useForm } from 'react-hook-form';
-import { CreateProduct } from '../types/products';
+import { CreateProduct, Product, UpdateProduct } from '../types/products';
 import { Button, Input, Textarea } from '@nextui-org/react';
-import { useCreateProductQuery } from '../services/useProduct';
+import { useUpdateProductQuery } from '../services/useProduct';
 import { useDragDrop } from '../hooks/useDragDrop';
 import DragAndDrop from './dragAndDrop';
+import useProductStore from '../zustand/product';
+import { useEffect } from 'react';
 
 interface CreateProductProps {
   onClose: () => void;
 }
 
-export const ModalCreateProduct = ({ onClose }: CreateProductProps) => {
-  const { mutateAsync: addProduct, isPending } = useCreateProductQuery();
+export const ModalUpdateProduct = ({ onClose }: CreateProductProps) => {
+  const { mutateAsync: updateProduct, isPending } = useUpdateProductQuery();
+  const { currentProduct, removeCurrentProduct } = useProductStore();
 
   const {
     register,
@@ -18,23 +21,51 @@ export const ModalCreateProduct = ({ onClose }: CreateProductProps) => {
     formState: { errors },
     setValue,
     watch,
-  } = useForm<CreateProduct>({
+    reset,
+  } = useForm<UpdateProduct>({
     defaultValues: {
       colorHex: '#000000',
     },
   });
-  console.log(watch('colorHex'));
 
   const imageDrag = useDragDrop({ setValue, registerKey: 'image' });
   const imageBackDrag = useDragDrop({ setValue, registerKey: 'imageBack' });
 
-  const onSubmit = (data: CreateProduct) => {
-    addProduct({ ...data, image: data.image[0], imageBack: data.imageBack[0] });
+  const onSubmit = (data: UpdateProduct) => {
+    console.log('data: ', data);
+
+    if (typeof data.image !== 'string' && typeof data.imageBack !== 'string') {
+      console.log('BOTH FILE');
+      updateProduct({ ...data, image: data.image[0], imageBack: data.imageBack[0] });
+    }
+
+    if (typeof data.image !== 'string' && typeof data.imageBack === 'string') {
+      console.log('Imageback String');
+      updateProduct({ ...data, image: data.image[0] });
+    }
+    if (typeof data.imageBack !== 'string' && typeof data.image === 'string') {
+      console.log('Image String');
+
+      updateProduct({ ...data, imageBack: data.imageBack[0] });
+    }
+    if (typeof data.image === 'string' && typeof data.imageBack === 'string') {
+      console.log('BOTH STRING');
+      updateProduct({ ...data });
+    }
   };
+
+  useEffect(() => {
+    const images = { image: currentProduct.urlImage, imageBack: currentProduct.urlImageBack };
+
+    const products = { ...currentProduct, ...images };
+    delete products.urlImage;
+    delete products.urlImageBack;
+    reset({ ...products });
+  }, []);
 
   return (
     <div className="max-h-[650px] overflow-auto">
-      <p className="my-5 font-bold">Create new product</p>
+      <p className="my-5 font-bold">Update product</p>
       <form className="w-full space-y-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex gap-5">
           <Input
@@ -134,7 +165,7 @@ export const ModalCreateProduct = ({ onClose }: CreateProductProps) => {
               register={register}
               registerKey="image"
               resetValue={imageDrag.resetValue}
-              selectedFile={imageDrag.selectedFile}
+              selectedFile={([watch('image')] as any) || imageDrag.selectedFile}
               clearSelectedFile={imageDrag.clearSelectedFile}
               watch={watch}
             />
@@ -147,7 +178,7 @@ export const ModalCreateProduct = ({ onClose }: CreateProductProps) => {
               register={register}
               registerKey="imageBack"
               resetValue={imageBackDrag.resetValue}
-              selectedFile={imageBackDrag.selectedFile}
+              selectedFile={([watch('imageBack')] as any) || imageDrag.selectedFile}
               clearSelectedFile={imageBackDrag.clearSelectedFile}
               watch={watch}
             />
@@ -158,7 +189,7 @@ export const ModalCreateProduct = ({ onClose }: CreateProductProps) => {
             Cancelar
           </Button>
           <Button className="w-full bg-blue-500" type="submit" isLoading={isPending}>
-            Create
+            Update
           </Button>
         </div>
       </form>

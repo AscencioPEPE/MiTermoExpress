@@ -22,5 +22,34 @@ export interface Product {
   category: string;
   availability: number;
 }
+export interface CreateProduct {
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  color: string;
+  sku: string;
+  colorHex: string;
+  image: string;
+  imageBack: string;
+  capacity: number;
+  category: string;
+  availability: number;
+}
+
+export interface UpdateProduct {
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  color: string;
+  sku: string;
+  colorHex: string;
+  image: string;
+  imageBack: string;
+  capacity: number;
+  category: string;
+  availability: number;
+}
 
 export type CartProduct = Product & { quantityToBuy: number };

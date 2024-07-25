@@ -81,12 +81,6 @@ export const MainRoutes: MainRoutesProps[] = [
     isProtected: false,
   },
   {
-    path: '/allOrders',
-    component: OrdersAdmin,
-    isProtected: true,
-    role: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'],
-  },
-  {
     path: '/orders',
     component: Orders,
     isProtected: false,
@@ -96,6 +90,12 @@ export const MainRoutes: MainRoutesProps[] = [
     component: Admin,
     isProtected: true,
     role: ['ROLE_SUPER_ADMIN'],
+  },
+  {
+    path: '/admin/orders',
+    component: OrdersAdmin,
+    isProtected: true,
+    role: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'],
   },
   {
     path: '/admin/products',
