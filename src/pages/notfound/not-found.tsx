@@ -10,7 +10,11 @@ const NotFound = () => {
         </div>
         <div className="flex justify-center">
           <p className="text-softWhite">
-            Do you want to go to <Link className="cursor-pointer text-primary hover:text-primary">HOME</Link>?
+            Do you want to go to{' '}
+            <Link className="cursor-pointer text-primary hover:text-primary" href="/products">
+              HOME
+            </Link>
+            ?
           </p>
         </div>
       </div>

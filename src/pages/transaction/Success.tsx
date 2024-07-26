@@ -64,7 +64,7 @@ const Success = () => {
           <Link className="text-white/70">admin@artetermos.com</Link>
         </div>
         <div className="flex justify-center pb-5">
-          <Link href="admin@artetermos.com">Continue buying</Link>
+          <Link href="/products">Continue buying</Link>
         </div>
       </div>
     </div>

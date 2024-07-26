@@ -14,7 +14,7 @@ const Orders = () => {
   if (isError) {
     return (
       <ModalSimple isOpen={isError} size="lg" className="bg-[#1A1A1A]">
-        <ModalReLogin />
+        <ModalReLogin message="Please login to show your orders" />
       </ModalSimple>
     );
   }
@@ -32,7 +32,7 @@ const Orders = () => {
     return <Image src={product?.urlImage} className="size-[50px]" />;
   };
   return (
-    <div className="flex flex-col gap-4  px-10 py-5">
+    <div className="flex flex-col  gap-4 px-10 py-5">
       {data?.orders?.length > 0 ? (
         <Accordion>
           {data?.orders?.map((item, index) => (
@@ -62,9 +62,8 @@ const Orders = () => {
           ))}
         </Accordion>
       ) : (
-        <div className="flex size-full flex-col items-center justify-center">
-          <h2 className="text-xl text-softWhite">You don't have orders yet!</h2>
-          <p className="text-softWhite">Please buy an item first to see your previews orders</p>
+        <div className="flex size-full h-dvhContainer flex-col items-center justify-center ">
+          <h2 className="rounded-lg bg-[#0000007c] p-5 text-xl text-softWhite">You don't have orders yet!</h2>
         </div>
       )}
     </div>
