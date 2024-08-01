@@ -63,7 +63,15 @@ const Orders = () => {
         </Accordion>
       ) : (
         <div className="flex size-full h-dvhContainer flex-col items-center justify-center ">
-          <h2 className="rounded-lg bg-[#0000007c] p-5 text-xl text-softWhite">You don't have orders yet!</h2>
+          <div className="rounded-lg bg-[#0000007c] p-5 ">
+            <h2 className="text-center text-xl text-softWhite">You don't have orders yet!</h2>
+            {currentUser.isGuest && (
+              <p className="mt-5 text-white/70">
+                If you bought your items like <span className="text-primary/60">GUEST</span> you need to create a new
+                account with your email that you used to bought
+              </p>
+            )}
+          </div>
         </div>
       )}
     </div>

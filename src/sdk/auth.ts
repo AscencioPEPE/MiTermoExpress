@@ -31,7 +31,7 @@ export const login = async (credentials: LoginSchema) => {
 
 export const registerCustomer = async (credentials: RegisterCustomerSchema) => {
   const { data } = await apiRequest({
-    url: '/auth/register/customer?createAccount=true',
+    url: '/customer/register/customer?createAccount=true',
     method: 'POST',
     data: credentials,
   });
@@ -41,7 +41,7 @@ export const registerCustomer = async (credentials: RegisterCustomerSchema) => {
 
 export const registerGuest = async (credentials: RegisterCustomerSchema) => {
   const { data } = await apiRequest({
-    url: '/auth/register/customer?createAccount=false',
+    url: '/customer/register/customer?createAccount=false',
     method: 'POST',
     data: credentials,
   });

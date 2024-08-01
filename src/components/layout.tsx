@@ -26,6 +26,13 @@ const userNavigation = [
   { name: 'Logout', href: '/' },
 ];
 
+const adminNavigation = [
+  { name: 'Admins', href: '/admin' },
+  { name: 'Orders', href: '/admin/orders' },
+  { name: 'Products', href: '/admin/products' },
+  { name: 'Logout', href: '/' },
+];
+
 const guestNavigation = [
   { name: 'Products', href: '/products' },
   { name: 'Your cart', href: '/cart' },
@@ -40,7 +47,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const { currentUser, removeCurrentUser } = useUserStore();
   const { currentCartItems } = useCartStore();
-
+  console.log(currentUser.role);
   return (
     <AnimatePresence>
       <div className="min-h-full bg-[url('/images/background.jpg')] bg-cover bg-fixed bg-no-repeat">
@@ -59,12 +66,7 @@ export default function Layout({ children }: LayoutProps) {
                   <div className="flex items-center">
                     <Link href="/">
                       <div className="flex shrink-0 items-center justify-center gap-1">
-                        <Image
-                          className="z-1 size-6"
-                          src="https://cdn-icons-png.flaticon.com/128/562/562031.png"
-                          alt="Your Company"
-                        />
-                        <h2 className="text-softWhite">ArteTermos</h2>
+                        <Image className="z-1 size-[150px]" src="/images/logo.png" alt="Your Company" />
                       </div>
                     </Link>
                     <div className="hidden md:block">
@@ -139,26 +141,49 @@ export default function Layout({ children }: LayoutProps) {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-[#1A1A1A] py-1 shadow-lg ring-1 ring-white/15 focus:outline-none">
-                              {userNavigation.map((item) => (
-                                <Menu.Item key={item.name}>
-                                  {({ active }) => (
-                                    <Link
-                                      href={item.href}
-                                      className={classNames(
-                                        active ? 'bg-[#282828] ' : '',
-                                        'block px-4 py-2 text-sm text-white/80 hover:text-white/70'
-                                      )}
-                                      onClick={() => {
-                                        if (item.name === 'Logout') removeCurrentUser();
-                                      }}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  )}
-                                </Menu.Item>
-                              ))}
-                            </Menu.Items>
+                            {currentUser.role === 'ROLE_SUPER_ADMIN' || currentUser.role === 'ROLE_ADMIN' ? (
+                              <Menu.Items className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-[#1A1A1A] py-1 shadow-lg ring-1 ring-white/15 focus:outline-none">
+                                {adminNavigation.map((item) => (
+                                  <Menu.Item key={item.name}>
+                                    {({ active }) => (
+                                      <Link
+                                        href={item.href}
+                                        className={classNames(
+                                          active ? 'bg-[#282828] ' : '',
+                                          'block px-4 py-2 text-sm text-white/80 hover:text-white/70'
+                                        )}
+                                        onClick={() => {
+                                          if (item.name === 'Logout') removeCurrentUser();
+                                        }}
+                                      >
+                                        {item.name}
+                                      </Link>
+                                    )}
+                                  </Menu.Item>
+                                ))}
+                              </Menu.Items>
+                            ) : (
+                              <Menu.Items className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-[#1A1A1A] py-1 shadow-lg ring-1 ring-white/15 focus:outline-none">
+                                {userNavigation.map((item) => (
+                                  <Menu.Item key={item.name}>
+                                    {({ active }) => (
+                                      <Link
+                                        href={item.href}
+                                        className={classNames(
+                                          active ? 'bg-[#282828] ' : '',
+                                          'block px-4 py-2 text-sm text-white/80 hover:text-white/70'
+                                        )}
+                                        onClick={() => {
+                                          if (item.name === 'Logout') removeCurrentUser();
+                                        }}
+                                      >
+                                        {item.name}
+                                      </Link>
+                                    )}
+                                  </Menu.Item>
+                                ))}
+                              </Menu.Items>
+                            )}
                           </Transition>
                         </Menu>
                       ) : (
@@ -265,19 +290,39 @@ export default function Layout({ children }: LayoutProps) {
                   <div className="mt-3 space-y-1 px-2">
                     {currentUser?.token ? (
                       <>
-                        {userNavigation.map((item) => (
-                          <Disclosure.Button
-                            key={item.name}
-                            as="a"
-                            href={item.href}
-                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-[#1a1a1aa5] hover:text-white"
-                            onClick={() => {
-                              if (item.name === 'Logout') removeCurrentUser();
-                            }}
-                          >
-                            {item.name}
-                          </Disclosure.Button>
-                        ))}
+                        {currentUser.role === 'ROLE_SUPER_ADMIN' || currentUser.role === 'ROLE_ADMIN' ? (
+                          <>
+                            {adminNavigation.map((item) => (
+                              <Disclosure.Button
+                                key={item.name}
+                                as="a"
+                                href={item.href}
+                                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-[#1a1a1aa5] hover:text-white"
+                                onClick={() => {
+                                  if (item.name === 'Logout') removeCurrentUser();
+                                }}
+                              >
+                                {item.name}
+                              </Disclosure.Button>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            {userNavigation.map((item) => (
+                              <Disclosure.Button
+                                key={item.name}
+                                as="a"
+                                href={item.href}
+                                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-[#1a1a1aa5] hover:text-white"
+                                onClick={() => {
+                                  if (item.name === 'Logout') removeCurrentUser();
+                                }}
+                              >
+                                {item.name}
+                              </Disclosure.Button>
+                            ))}
+                          </>
+                        )}
                       </>
                     ) : (
                       <>
